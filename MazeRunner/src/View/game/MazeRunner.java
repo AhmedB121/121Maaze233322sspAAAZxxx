@@ -17,13 +17,7 @@ public class MazeRunner {
 
     public MazeRunner() throws InterruptedException {
         JFrame f = new JFrame();
-//        Thread thread=new Thread();
-//        int i;
-//        for (i=60;i>0;i--)
-//        {
-//            thread.sleep(20);
-//            System.out.println(i);
-//        }
+
 
 
        f.setTitle("Maze Game");

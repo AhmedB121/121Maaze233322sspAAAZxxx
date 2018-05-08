@@ -19,6 +19,9 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
+   private Timer tm=new Timer(1000,this);
+   JTextField jf = new JTextField(10);
+   int time = 0;
     private Map m;
     private Player p;
     private SmallBomb SB;
@@ -35,6 +38,7 @@ public class Board extends JPanel implements ActionListener {
     private boolean up,down,right,left;
 
     public Board() {
+        add(jf);
         SB = new SmallBomb();
         p = new Player();
         m = new Map();
@@ -52,7 +56,7 @@ public class Board extends JPanel implements ActionListener {
             Finishstr = "Winner";
             win = true;
         }
-
+logic();
         repaint();
     }
 
@@ -320,4 +324,15 @@ public class Board extends JPanel implements ActionListener {
 
         }
     }
+    public void logic()
+	{
+		time++;
+		if (time==3600){
+                    JOptionPane.showMessageDialog(null,"Time is up");
+                    System.exit(0);
+                }
+		jf.setText(""+time/60);
+		
+		
+	}
 }
