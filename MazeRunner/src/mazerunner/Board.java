@@ -10,6 +10,7 @@ import Model.game.SmallBomb;
 import Model.game.coin;
 import Model.game.dollar;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.*;
@@ -120,15 +121,20 @@ logic();
                 g.drawImage(p.getPlayer4(), p.getTileX() * 32, p.getTileY() * 32, null);
             }
         }
+        g.setColor(Color.red);
         if (win) {
+             //Font font = new Font("Jokerman", Font.PLAIN, 35);
             g.drawString(Finishstr, 500, 500);
         }
         if (Health <= 0) {
             Health = 0;
-            g.drawString("YOU LOST ", 500, 500);
+             //Font font = new Font("Jokerman", Font.PLAIN, 35);
+          //  g.setFont(font);
+        
+            g.drawString("Game Over", 500, 500);
         }
         g.setColor(Color.BLACK);
-        g.drawRect(0, 0, 100, 30);
+        g.drawRect(40, 0, 100, 30);
         g.setColor(Color.GREEN);
         if (Health <= 50) {
             g.setColor(Color.RED);
@@ -137,10 +143,14 @@ logic();
             g.setColor(Color.BLACK);
         }
 
-        g.fillRect(0, 0, Health, 30);
+        g.fillRect(40, 0, Health, 30);
         g.setColor(Color.BLACK);
-        g.drawString(Integer.toString(Health), 20, 20);
-        g.drawString(Integer.toString(score), 150, 20);
+        g.drawString("Health", 0, 20);
+        g.drawString(Integer.toString(Health), 40, 20);
+        g.drawString("Score", 220, 20);
+        g.drawString(Integer.toString(score), 270, 20);
+        g.drawString("Time", 390, 20);
+        
 
     }
 

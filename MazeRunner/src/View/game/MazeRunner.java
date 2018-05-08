@@ -17,9 +17,6 @@ public class MazeRunner {
 
     public MazeRunner() throws InterruptedException {
         JFrame f = new JFrame();
-
-
-
        f.setTitle("Maze Game");
         f.add(new Board());
         f.setSize(1000, 1000);
