@@ -22,7 +22,7 @@ public class Map {
     private int rows=30;
     private char MAP[][]=new char[coloums][rows];
     private String Map[]=new String[31];
-    private Image grass,wall,finish,start,tree,Armour;
+    private Image grass,wall,finish,start,tree,Armour,clock;
     public Map()
     {
         ImageIcon img=new ImageIcon("Newgrass.jpg");
@@ -37,6 +37,8 @@ public class Map {
         tree=img.getImage();
          img=new ImageIcon("Aon.png");
         Armour=img.getImage();
+        img=new ImageIcon("tgif.gif");
+       clock=img.getImage();
         openFile();
         readFile();
         closeFile();
@@ -57,6 +59,11 @@ public class Map {
       public Image getArmour()
     {
         return Armour;
+    }
+      
+       public Image getclock()
+    {
+        return clock;
     }
     
     public Image getFinishLine(){

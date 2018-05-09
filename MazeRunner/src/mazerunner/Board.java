@@ -46,7 +46,7 @@ public class Board extends JPanel implements ActionListener {
     public Board() {
         add(jf);
         SB = new SmallBomb();
-        p = new Player();
+        p = new Player(0,0);
         m = new Map();
         ImageIcon img = new ImageIcon("w.jpg");
         toolbar = img.getImage();
@@ -165,6 +165,8 @@ public class Board extends JPanel implements ActionListener {
         g.drawString("Score", 220, 20);
         g.drawString(Integer.toString(score), 270, 20);
         g.drawString("Time", 390, 20);
+      
+        //g.drawImage(m.getclock(), 400,0, null);
 
     }
 
@@ -425,7 +427,7 @@ public class Board extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(null, "Time is up");
             System.exit(0);
         }
-        jf.setText("" + time / 60);
+        jf.setText("0" + time / 60);
 
     }
 }
