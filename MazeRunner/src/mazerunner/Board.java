@@ -17,12 +17,16 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.*;
 import javax.crypto.Mac;
 import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
-
+    public int currentArticle=0;
+    public boolean isCheckPoint;
+    CareTaker caretaker=new CareTaker();
+    Originator originator=new Originator();
     private Timer timer;
     private Timer tm = new Timer(1000, this);
     JTextField jf = new JTextField(10);
@@ -63,12 +67,14 @@ public class Board extends JPanel implements ActionListener {
             win = true;
         }
         logic();
+        
         repaint();
+        
     }
 
     public void paint(Graphics g) {
         super.paint(g);
-        if (win == false && Health > 0) {
+        if (win == false ) {
             for (int y = 0; y < 31; y++) {
                 for (int x = 0; x < 31; x++) {
                     if (m.getMap(x, y).equals("e")) {
@@ -131,17 +137,32 @@ public class Board extends JPanel implements ActionListener {
             if (down) {
                 g.drawImage(p.getPlayer4(), p.getTileX() * 32, p.getTileY() * 32, null);
             }
+            if(isCheckPoint && Health<=0 && currentArticle>=1){
+                 Point aPoint=new Point();
+                 currentArticle--;
+                 
+                 aPoint=originator.restoreFromMemento(caretaker.getMemento(currentArticle));
+                 p.setTileX(aPoint.x);
+                 p.setTileY(aPoint.y);
+                 Health=100;
+                 g.drawImage(p.getPlayer4(),aPoint.x*32, aPoint.y*32, null);
+                 
+             }
+             
+            
         }
+        
         g.setColor(Color.red);
         if (win) {
             //Font font = new Font("Jokerman", Font.PLAIN, 35);
             g.drawString(Finishstr, 500, 500);
         }
-        if (Health <= 0) {
-            Health = 0;
+        if (Health <=0 && isCheckPoint==false) {
+            
             //Font font = new Font("Jokerman", Font.PLAIN, 35);
             //  g.setFont(font);
-
+            
+            Health=0;
             g.drawString("Game Over", 500, 500);
         }
         g.setColor(Color.BLACK);
@@ -213,6 +234,14 @@ public class Board extends JPanel implements ActionListener {
                         m.set(p.getTileX(), p.getTileY());
                     }if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
                      m.setflag(p.getTileX(), p.getTileY());
+                     Point mypoint =new Point();
+                     mypoint.x=p.getTileX();
+                     mypoint.y=p.getTileY();
+                     originator.set(mypoint);
+                     caretaker.addMemento(originator.storeInMemento());
+                     isCheckPoint=true;
+                     currentArticle++;
+                     
                     }
                 }
                 up = true;
@@ -259,6 +288,13 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
                      m.setflag(p.getTileX(), p.getTileY());
+                     Point mypoint =new Point();
+                     mypoint.x=p.getTileX();
+                     mypoint.y=p.getTileY();
+                     originator.set(mypoint);
+                     caretaker.addMemento(originator.storeInMemento());
+                     isCheckPoint=true;
+                     currentArticle++;
                     }
                 }
                 up = false;
@@ -306,6 +342,13 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
                      m.setflag(p.getTileX(), p.getTileY());
+                     Point mypoint =new Point();
+                     mypoint.x=p.getTileX();
+                     mypoint.y=p.getTileY();
+                     originator.set(mypoint);
+                     caretaker.addMemento(originator.storeInMemento());
+                     isCheckPoint=true;
+                     currentArticle++;
                     }
                 }
                 up = false;
@@ -355,6 +398,13 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
                      m.setflag(p.getTileX(), p.getTileY());
+                        Point mypoint =new Point();
+                     mypoint.x=p.getTileX();
+                     mypoint.y=p.getTileY();
+                     originator.set(mypoint);
+                     caretaker.addMemento(originator.storeInMemento());
+                     isCheckPoint=true;
+                     currentArticle++;
                     }
                 }
                 up = false;

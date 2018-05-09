@@ -55,6 +55,14 @@ public class Player extends Observable {
         return tileX;
     }
 
+    public void setTileX(int tileX) {
+        this.tileX = tileX;
+    }
+
+    public void setTileY(int tileY) {
+        this.tileY = tileY;
+    }
+
     public int getTileY() {
         return tileY;
     }
