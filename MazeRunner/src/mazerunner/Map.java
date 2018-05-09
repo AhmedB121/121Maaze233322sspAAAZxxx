@@ -22,10 +22,10 @@ public class Map {
     private int rows=30;
     private char MAP[][]=new char[coloums][rows];
     private String Map[]=new String[31];
-    private Image grass,wall,finish,start,tree;
+    private Image grass,wall,finish,start,tree,Armour;
     public Map()
     {
-        ImageIcon img=new ImageIcon("white.jpg");
+        ImageIcon img=new ImageIcon("Newgrass.jpg");
         grass=img.getImage();
         img=new ImageIcon("wall.png");
         wall=img.getImage();
@@ -35,6 +35,8 @@ public class Map {
         start=img.getImage();
          img=new ImageIcon("tree.png");
         tree=img.getImage();
+         img=new ImageIcon("Aon.png");
+        Armour=img.getImage();
         openFile();
         readFile();
         closeFile();
@@ -52,6 +54,10 @@ public class Map {
     {
         return tree;
     }
+      public Image getArmour()
+    {
+        return Armour;
+    }
     
     public Image getFinishLine(){
         return finish;
@@ -67,6 +73,12 @@ public class Map {
     public void set(int x,int y){
         char f[]=Map[y].toCharArray();
         f[x]='g';
+       Map[y]=String.valueOf(f);
+    }
+    
+    public void setflag(int x,int y){
+        char f[]=Map[y].toCharArray();
+        f[x]='Z';
        Map[y]=String.valueOf(f);
     }
     

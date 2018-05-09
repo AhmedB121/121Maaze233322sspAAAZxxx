@@ -2,6 +2,7 @@ package mazerunner;
 
 import Model.game.Bigbombs;
 import Model.game.Bombs;
+import Model.game.Checkpoint;
 import Model.game.Gift;
 import Model.game.HealthGift;
 import Model.game.Player;
@@ -9,7 +10,10 @@ import Model.game.ShieldGift;
 import Model.game.SmallBomb;
 import Model.game.coin;
 import Model.game.dollar;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -20,15 +24,16 @@ import javax.swing.*;
 public class Board extends JPanel implements ActionListener {
 
     private Timer timer;
-   private Timer tm=new Timer(1000,this);
-   JTextField jf = new JTextField(10);
-   int time = 0;
+    private Timer tm = new Timer(1000, this);
+    JTextField jf = new JTextField(10);
+    int time = 0;
     private Map m;
     private Player p;
     private SmallBomb SB;
     private Bombs BB = new Bigbombs();
     private Gift HG = new HealthGift();
     private Gift SG = new ShieldGift();
+    private Checkpoint checkpoint=new Checkpoint();
     private Gift CG = new coin();
     private Gift DG = new dollar();
     private String Finishstr = "";
@@ -36,7 +41,7 @@ public class Board extends JPanel implements ActionListener {
     public static int Health = 100;
     public static int score = 0;
     private Image toolbar;
-    private boolean up,down,right,left;
+    private boolean up, down, right, left;
 
     public Board() {
         add(jf);
@@ -57,7 +62,7 @@ public class Board extends JPanel implements ActionListener {
             Finishstr = "Winner";
             win = true;
         }
-logic();
+        logic();
         repaint();
     }
 
@@ -102,11 +107,17 @@ logic();
                     if (m.getMap(x, y).equals("t")) {
                         g.drawImage(m.getgrassWall(), x * 32, y * 32, null);
                     }
+                    if(m.getMap(x, y).equals("z")){
+                       g.drawImage(checkpoint.getflag1(), x * 32, y * 32, null);
 
+                    }
+                     if(m.getMap(x, y).equals("Z")){
+                       g.drawImage(checkpoint.getflag2(), x * 32, y * 32, null);
+
+                    }
                 }
 
             }
-                           
 
             if (left) {
                 g.drawImage(p.getPlayer1(), p.getTileX() * 32, p.getTileY() * 32, null);
@@ -123,14 +134,14 @@ logic();
         }
         g.setColor(Color.red);
         if (win) {
-             //Font font = new Font("Jokerman", Font.PLAIN, 35);
+            //Font font = new Font("Jokerman", Font.PLAIN, 35);
             g.drawString(Finishstr, 500, 500);
         }
         if (Health <= 0) {
             Health = 0;
-             //Font font = new Font("Jokerman", Font.PLAIN, 35);
-          //  g.setFont(font);
-        
+            //Font font = new Font("Jokerman", Font.PLAIN, 35);
+            //  g.setFont(font);
+
             g.drawString("Game Over", 500, 500);
         }
         g.setColor(Color.BLACK);
@@ -142,6 +153,10 @@ logic();
         if (Health <= 25) {
             g.setColor(Color.BLACK);
         }
+        
+
+        if(SG.ison())
+        g.drawImage(m.getArmour(), 165,0, null);
 
         g.fillRect(40, 0, Health, 30);
         g.setColor(Color.BLACK);
@@ -150,7 +165,6 @@ logic();
         g.drawString("Score", 220, 20);
         g.drawString(Integer.toString(score), 270, 20);
         g.drawString("Time", 390, 20);
-        
 
     }
 
@@ -159,7 +173,7 @@ logic();
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
             if (keycode == KeyEvent.VK_W) {
-                if (!m.getMap(p.getTileX(), p.getTileY() - 1).equals("w")&&!m.getMap(p.getTileX(), p.getTileY() - 1).equals("t")) {
+                if (!m.getMap(p.getTileX(), p.getTileY() - 1).equals("w") && !m.getMap(p.getTileX(), p.getTileY() - 1).equals("t")) {
                     p.move(0, -1);
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("s")) {
                         if (SG.ison()) {
@@ -195,12 +209,17 @@ logic();
                             Health = Health - 50;
                         }
                         m.set(p.getTileX(), p.getTileY());
+                    }if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
+                     m.setflag(p.getTileX(), p.getTileY());
                     }
                 }
-                up=true;down=false;right=false;left=false;
+                up = true;
+                down = false;
+                right = false;
+                left = false;
             }
             if (keycode == KeyEvent.VK_S) {
-                if (!m.getMap(p.getTileX(), p.getTileY() + 1).equals("w")&&!m.getMap(p.getTileX(), p.getTileY() + 1).equals("t")) {
+                if (!m.getMap(p.getTileX(), p.getTileY() + 1).equals("w") && !m.getMap(p.getTileX(), p.getTileY() + 1).equals("t")) {
                     p.move(0, 1);
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("s")) {
                         if (SG.ison()) {
@@ -236,11 +255,17 @@ logic();
                         }
                         m.set(p.getTileX(), p.getTileY());
                     }
+                    if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
+                     m.setflag(p.getTileX(), p.getTileY());
+                    }
                 }
-                 up=false;down=true;right=false;left=false;
+                up = false;
+                down = true;
+                right = false;
+                left = false;
             }
             if (keycode == KeyEvent.VK_A) {
-                if (!m.getMap(p.getTileX() - 1, p.getTileY()).equals("w")&&!m.getMap(p.getTileX()-1, p.getTileY() ).equals("t")) {
+                if (!m.getMap(p.getTileX() - 1, p.getTileY()).equals("w") && !m.getMap(p.getTileX() - 1, p.getTileY()).equals("t")) {
                     p.move(-1, 0);
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("s")) {
                         if (SG.ison()) {
@@ -277,12 +302,18 @@ logic();
                         }
                         m.set(p.getTileX(), p.getTileY());
                     }
+                    if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
+                     m.setflag(p.getTileX(), p.getTileY());
+                    }
                 }
-                                 up=false;down=false;right=false;left=true;
+                up = false;
+                down = false;
+                right = false;
+                left = true;
 
             }
             if (keycode == KeyEvent.VK_D) {
-                if (!m.getMap(p.getTileX() + 1, p.getTileY()).equals("w")&&!m.getMap(p.getTileX()+1, p.getTileY()).equals("t")) {
+                if (!m.getMap(p.getTileX() + 1, p.getTileY()).equals("w") && !m.getMap(p.getTileX() + 1, p.getTileY()).equals("t")) {
                     p.move(1, 0);
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("s")) {
 
@@ -320,9 +351,62 @@ logic();
                         }
                         m.set(p.getTileX(), p.getTileY());
                     }
+                    if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
+                     m.setflag(p.getTileX(), p.getTileY());
+                    }
                 }
-                                                 up=false;down=false;right=true;left=false;
+                up = false;
+                down = false;
+                right = true;
+                left = false;
 
+            }
+            if (keycode == KeyEvent.VK_ESCAPE) {
+                JFrame pauseFrame = new JFrame("Pause menu");
+                // pauseFrame.getContentPane().setLayout(new ViewportLayout());
+                ((JComponent) pauseFrame.getContentPane()).setOpaque(false);
+
+              JLabel background=new JLabel(new ImageIcon("Background.jpg"));
+                pauseFrame.add(background);
+
+                
+                
+
+                pauseFrame.setSize(400, 500);
+                pauseFrame.setUndecorated(true);
+                pauseFrame.setVisible(true);
+                pauseFrame.setLocationRelativeTo(null);
+                JButton btncontinue = new JButton("Continue");
+                btncontinue.setBounds(120, 50, 130, 50);
+                pauseFrame.add(btncontinue);
+                btncontinue.setFocusable(false);
+
+                JButton btnexit = new JButton("Exit");
+                btnexit.setBounds(120, 140, 130, 50);
+                pauseFrame.add(btnexit);
+                pauseFrame.setLayout(null);
+
+                  JLabel str = new JLabel("GAME PAUSED");
+                str.setBounds(129, 10, 130, 50);
+                pauseFrame.add(str);
+                
+                btnexit.setFocusable(false);
+
+                View.game.MazeRunner.f.setEnabled(false);
+                btncontinue.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pauseFrame.dispose();
+                        View.game.MazeRunner.f.setVisible(true);
+                        View.game.MazeRunner.f.setEnabled(true);
+                    }
+                });
+                btnexit.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                    }
+                });
             }
         }
 
@@ -334,15 +418,14 @@ logic();
 
         }
     }
-    public void logic()
-	{
-		time++;
-		if (time==3600){
-                    JOptionPane.showMessageDialog(null,"Time is up");
-                    System.exit(0);
-                }
-		jf.setText(""+time/60);
-		
-		
-	}
+
+    public void logic() {
+        time++;
+        if (time == 3600) {
+            JOptionPane.showMessageDialog(null, "Time is up");
+            System.exit(0);
+        }
+        jf.setText("" + time / 60);
+
+    }
 }

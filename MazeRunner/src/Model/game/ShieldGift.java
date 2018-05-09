@@ -20,7 +20,7 @@ protected  int protectHeath=5;
     protected boolean ison=false;
     public ShieldGift() {
          super("Shield Gift");
-         ImageIcon img=new ImageIcon("Shieldgift.gif");
+         ImageIcon img=new ImageIcon("Shield.png");
          this.sheild=img.getImage();
         
     }
