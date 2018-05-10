@@ -56,10 +56,10 @@ public class Board extends JPanel implements ActionListener {
     Giftfactory giftfactory = new Giftfactory();
     private Bombs BB = bombfactory.choosetype("big bomb");
     private Gift HG = giftfactory.choosetype("Health gift");
-    public  Gift SG = giftfactory.choosetype("Shield Gift");
+    public Gift SG = giftfactory.choosetype("Shield Gift");
     private Gift BG = giftfactory.choosetype("Bullet gift");
     private Gift CG = giftfactory.choosetype("coin");
-   private Gift DG = giftfactory.choosetype("dollar");
+    private Gift DG = giftfactory.choosetype("dollar");
     private Checkpoint checkpoint = new Checkpoint();
     private String Finishstr = "";
     private boolean win = false;
@@ -103,7 +103,7 @@ public class Board extends JPanel implements ActionListener {
 
     public void paint(Graphics g) {
         super.paint(g);
-        if (win == false) {
+        if (win == false && Health > 0) {
             for (int y = 0; y < 31; y++) {
                 for (int x = 0; x < 31; x++) {
                     if (m.getMap(x, y).equals("e")) {
@@ -170,31 +170,52 @@ public class Board extends JPanel implements ActionListener {
             if (down) {
                 g.drawImage(p.getPlayer4(), p.getTileX() * 32, p.getTileY() * 32, null);
             }
-            if (isCheckPoint && Health <= 0 && currentArticle >= 1) {
-                Point aPoint = new Point();
-                currentArticle--;
+//            if (isCheckPoint && Health <= 0 && currentArticle >= 1) {
+//                Point aPoint = new Point();
+//                currentArticle--;
+//
+//                aPoint = originator.restoreFromMemento(caretaker.getMemento(currentArticle));
+//                p.setTileX(aPoint.x);
+//                p.setTileY(aPoint.y);
+//                Health = 100;
+//                g.drawImage(p.getPlayer4(), aPoint.x * 32, aPoint.y * 32, null);
+//
+//            }
 
-                aPoint = originator.restoreFromMemento(caretaker.getMemento(currentArticle));
-                p.setTileX(aPoint.x);
-                p.setTileY(aPoint.y);
-                Health = 100;
-                g.drawImage(p.getPlayer4(), aPoint.x * 32, aPoint.y * 32, null);
+        }
+        if (isCheckPoint && Health <= 0 && currentArticle >= 1) {
+            Point aPoint = new Point();
+            currentArticle--;
 
-            }
+            aPoint = originator.restoreFromMemento(caretaker.getMemento(currentArticle));
+            p.setTileX(aPoint.x);
+            p.setTileY(aPoint.y);
+            Health = 100;
+            g.drawImage(p.getPlayer4(), aPoint.x * 32, aPoint.y * 32, null);
 
         }
 
         g.setColor(Color.red);
         if (win) {
-            //Font font = new Font("Jokerman", Font.PLAIN, 35);
-            g.drawString(Finishstr, 500, 500);
+            //       Image winner;
+            //g.drawString(Finishstr, 500, 500);
+//            ImageIcon img = new ImageIcon("won.jpg");
+//            winner = img.getImage();
+//            g.drawImage(winner, 500, 500, null);
+//            JButton btnSave = new JButton("Save");
+//
+//            JFrame pauseFrame = new JFrame("Pause menu");
+//            pauseFrame.setUndecorated(true);
+//            pauseFrame.setSize(400, 500);
+//            pauseFrame.setLayout(null);
+//            pauseFrame.setLocationRelativeTo(null);
+//            JLabel background = new JLabel(new ImageIcon("won.jpg"));
+//            pauseFrame.add(background);
+//            pauseFrame.setVisible(true);
+
         }
         if (Health <= 0 && isCheckPoint == false) {
-
-            //Font font = new Font("Jokerman", Font.PLAIN, 35);
-            //  g.setFont(font);
             Health = 0;
-
             g.drawString("Game Over", 500, 500);
         }
         g.setColor(Color.BLACK);
@@ -210,6 +231,10 @@ public class Board extends JPanel implements ActionListener {
         if (SG.ison()) {
             g.drawImage(m.getArmour(), 165, 0, null);
         }
+        Image clock;
+        g.drawString(Finishstr, 500, 500);
+        ImageIcon img = new ImageIcon("c.gif");
+        clock = img.getImage();
 
         g.fillRect(40, 0, Health, 30);
         g.setColor(Color.BLACK);
@@ -217,7 +242,7 @@ public class Board extends JPanel implements ActionListener {
         g.drawString(Integer.toString(Health), 40, 20);
         g.drawString("Score", 220, 20);
         g.drawString(Integer.toString(score), 270, 20);
-        g.drawString("Time", 390, 20);
+        g.drawImage(clock, 400, 0, null);
         g.drawString(Integer.toString(bullet), 650, 20);
         g.drawImage(m.getbicon(), 600, 0, null);
         //g.drawImage(m.getclock(), 400,0, null);
@@ -819,5 +844,5 @@ public class Board extends JPanel implements ActionListener {
             System.out.println(ex.getMessage());
         }
     }
-    
+
 }

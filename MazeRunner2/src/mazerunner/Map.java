@@ -31,7 +31,7 @@ public class Map {
         wall=img.getImage();
         img =new ImageIcon("FinishLine.jpg");
         finish=img.getImage();
-        img=new ImageIcon("hut.jpg");
+        img=new ImageIcon("start.jpg");
         start=img.getImage();
          img=new ImageIcon("Greenwall.jpg");
         tree=img.getImage();

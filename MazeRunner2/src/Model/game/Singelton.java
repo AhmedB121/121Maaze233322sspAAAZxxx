@@ -5,22 +5,10 @@
  */
 package Model.game;
 
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author Ahmed Bahey
  */
-public class Bigbombs extends Bombs{
-
-    public Bigbombs() {
-         super();
-        ImageIcon img = new ImageIcon("BigB.jpg");
-        super.Bombimg = img.getImage();
-        setDamage(20);
-    }
-    
-   
-    
+public class Singelton {
     
 }
