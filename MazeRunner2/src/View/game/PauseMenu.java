@@ -5,6 +5,7 @@
  */
 package View.game;
 
+import Model.game.ShieldGift;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -69,9 +70,11 @@ public class PauseMenu {
             public void actionPerformed(ActionEvent e) {
               //  boolean  isarmoron =Board.SG.ison();
               // saving with zero score
+              
                 int savehealth=Board.Health;
                 int savescore=Board.score;
                 int savebullets=Board.bullet;
+              //  boolean armorweared=
                 String [] savemap=new String[31];
                 for (int i=0;i<31;i++){
                     savemap[i]=Board.m.Map[i];

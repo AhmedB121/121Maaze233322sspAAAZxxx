@@ -56,7 +56,7 @@ public class Board extends JPanel implements ActionListener {
     Giftfactory giftfactory = new Giftfactory();
     private Bombs BB = bombfactory.choosetype("big bomb");
     private Gift HG = giftfactory.choosetype("Health gift");
-    public Gift SG = giftfactory.choosetype("Shield Gift");
+    public  Gift SG = giftfactory.choosetype("Shield Gift");
     private Gift BG = giftfactory.choosetype("Bullet gift");
     private Gift CG = giftfactory.choosetype("coin");
    private Gift DG = giftfactory.choosetype("dollar");
@@ -819,4 +819,5 @@ public class Board extends JPanel implements ActionListener {
             System.out.println(ex.getMessage());
         }
     }
+    
 }
