@@ -13,22 +13,27 @@ import mazerunner.Board;
  *
  * @author Ahmed Bahey
  */
-public class coin extends Gift{
-    
-    protected int incscore=100;
-   protected Image coins;
+public class coin extends Gift {
+
+    protected int incscore = 100;
+    protected Image coins;
+
     public coin() {
         super("coin");
-         ImageIcon img=new ImageIcon("coin.png");
-        coins=img.getImage();
+        ImageIcon img = new ImageIcon("coin.png");
+        coins = img.getImage();
     }
-    
-     public Image getimg() {
+
+    public Image getimg() {
         return coins;
     }
-     
-       public void increasescore(){
-           Board.score+=incscore;
-     }
-    
+
+    public void increasescore() {
+        Board.score += incscore;
+    }
+
+    @Override
+    public void update() {
+        increasescore();
+    }
 }
