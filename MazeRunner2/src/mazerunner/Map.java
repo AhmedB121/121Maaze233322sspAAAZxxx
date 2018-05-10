@@ -25,15 +25,15 @@ public class Map {
     private Image grass,wall,finish,start,tree,Armour,clock,bicon;
     public Map()
     {
-        ImageIcon img=new ImageIcon("sand.jpg");
+        ImageIcon img=new ImageIcon("Newgrass2.png");
         grass=img.getImage();
-        img=new ImageIcon("wall.png");
+        img=new ImageIcon("stonewall.jpg");
         wall=img.getImage();
         img =new ImageIcon("FinishLine.jpg");
         finish=img.getImage();
         img=new ImageIcon("hut.jpg");
         start=img.getImage();
-         img=new ImageIcon("tree.png");
+         img=new ImageIcon("Greenwall.jpg");
         tree=img.getImage();
          img=new ImageIcon("Aon.png");
         Armour=img.getImage();

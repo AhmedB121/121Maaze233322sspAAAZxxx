@@ -16,22 +16,22 @@ public class MazeRunner {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws InterruptedException, IOException {
-        
+
         new MazeRunner();
 
     }
 //new postision here
-   
+
     public static JFrame f = new JFrame();
 
     public MazeRunner() throws InterruptedException, IOException {
-        
-        
+
         new MainMenu();
         f.setTitle("Maze Game");
         f.add(new Board());
         f.setSize(1000, 1000);
         f.setLocationRelativeTo(null);
+        f.setUndecorated(true);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }

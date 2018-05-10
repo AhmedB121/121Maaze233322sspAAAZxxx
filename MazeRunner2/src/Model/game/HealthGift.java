@@ -19,7 +19,7 @@ public class HealthGift extends Gift{
     protected Image heart;
     public HealthGift() {
         super("Health Gift");
-         ImageIcon img=new ImageIcon("Heartgift.gif");
+         ImageIcon img=new ImageIcon("Heart.jpg");
         heart=img.getImage();
     }
     public  void increaseHealth(){
