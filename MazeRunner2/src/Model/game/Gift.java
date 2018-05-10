@@ -7,7 +7,7 @@ import mazerunner.Board;
  *
  * @author Ahmed Bahey
  */
-public abstract class Gift {
+public abstract class Gift implements Update{
 
     protected String type;
     protected Image heart;
@@ -35,6 +35,14 @@ public abstract class Gift {
     public Image getimg() {
         return heart;
     }
+    public int getHealth()
+    {
+        return 0;
+    }
     
-   
+    @Override
+    public void update()
+    {
+        
+    }
 }

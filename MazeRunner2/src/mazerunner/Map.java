@@ -25,7 +25,7 @@ public class Map {
     private Image grass,wall,finish,start,tree,Armour,clock,bicon;
     public Map()
     {
-        ImageIcon img=new ImageIcon("Newgrass.jpg");
+        ImageIcon img=new ImageIcon("sand.jpg");
         grass=img.getImage();
         img=new ImageIcon("wall.png");
         wall=img.getImage();

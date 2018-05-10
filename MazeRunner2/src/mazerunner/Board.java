@@ -12,6 +12,7 @@ import Model.game.SmallBomb;
 import Model.game.bulletsgift;
 import Model.game.coin;
 import Model.game.dollar;
+import static View.game.SettingsGui.check1;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,9 +22,19 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.Mac;
 import javax.swing.*;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
 
 public class Board extends JPanel implements ActionListener {
     public int currentArticle=0;
@@ -75,7 +86,11 @@ public class Board extends JPanel implements ActionListener {
             win = true;
         }
         logic();
-        
+        try {
+            music();
+        } catch (IOException ex) {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
         repaint();
         
     }
@@ -175,6 +190,7 @@ public class Board extends JPanel implements ActionListener {
             //  g.setFont(font);
             
             Health=0;
+            
             g.drawString("Game Over", 500, 500);
         }
         g.setColor(Color.BLACK);
@@ -238,6 +254,7 @@ public class Board extends JPanel implements ActionListener {
 
         public void keyPressed(KeyEvent e) {
             int keycode = e.getKeyCode();
+            if(check1.isSelected()){
             if (keycode == KeyEvent.VK_W) {
                 if (!m.getMap(p.getTileX(), p.getTileY() - 1).equals("w") && !m.getMap(p.getTileX(), p.getTileY() - 1).equals("t")) {
                     p.move(0, -1);
@@ -252,7 +269,8 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
                         m.set(p.getTileX(), p.getTileY());
-                        HG.increaseHealth();
+                       /// HG.increaseHealth();
+                       HG.update();
                     }
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                         SG.setIson(true);
@@ -314,7 +332,8 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
                         m.set(p.getTileX(), p.getTileY());
-                        HG.increaseHealth();
+                      //  HG.increaseHealth();
+                       HG.update();
                     }
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                         SG.setIson(true);
@@ -376,7 +395,8 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
                         m.set(p.getTileX(), p.getTileY());
-                        HG.increaseHealth();
+                      //  HG.increaseHealth();
+                       HG.update();
                     }
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                         SG.setIson(true);
@@ -440,7 +460,8 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
                         m.set(p.getTileX(), p.getTileY());
-                        HG.increaseHealth();
+                     //   HG.increaseHealth();
+                      HG.update();
                     }
                     if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                         SG.setIson(true);
@@ -465,7 +486,7 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
                      m.setflag(p.getTileX(), p.getTileY());
-                        Point mypoint =new Point();
+                     Point mypoint =new Point();
                      mypoint.x=p.getTileX();
                      mypoint.y=p.getTileY();
                      originator.set(mypoint);
@@ -488,6 +509,265 @@ public class Board extends JPanel implements ActionListener {
                 left = false;
                 lastPressed = "right";
 
+            }
+            }
+            else
+            {
+             if (keycode == KeyEvent.VK_UP) {
+                if (!m.getMap(p.getTileX(), p.getTileY() - 1).equals("w") && !m.getMap(p.getTileX(), p.getTileY() - 1).equals("t")) {
+                    p.move(0, -1);
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("s")) {
+                        if (SG.ison()) {
+                            Health = Health - 5;
+                            SG.setIson(false);
+                        } else {
+                            Health = Health - 10;
+                        }
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
+                        m.set(p.getTileX(), p.getTileY());
+                       /// HG.increaseHealth();
+                       HG.update();
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
+                        SG.setIson(true);
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
+                        CG.increasescore();
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
+                        DG.increasescore();
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
+                        if (SG.ison()) {
+                            Health = Health - 30;
+                            SG.setIson(false);
+                        } else {
+                            Health = Health - 50;
+                        }
+                        m.set(p.getTileX(), p.getTileY());
+                    }if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
+                     m.setflag(p.getTileX(), p.getTileY());
+                     Point mypoint =new Point();
+                     mypoint.x=p.getTileX();
+                     mypoint.y=p.getTileY();
+                     originator.set(mypoint);
+                     caretaker.addMemento(originator.storeInMemento());
+                     isCheckPoint=true;
+                     currentArticle++;
+                     
+                    }
+                     if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
+                        if(bullet>=6){  
+                        }else{
+                            bullet=bullet+1;
+                        }
+                         m.set(p.getTileX(), p.getTileY());
+                    }
+                }
+                up = true;
+                down = false;
+                right = false;
+                left = false;
+                lastPressed = "up";
+            }
+            if (keycode == KeyEvent.VK_DOWN) {
+                if (!m.getMap(p.getTileX(), p.getTileY() + 1).equals("w") && !m.getMap(p.getTileX(), p.getTileY() + 1).equals("t")) {
+                    p.move(0, 1);
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("s")) {
+                        if (SG.ison()) {
+                            Health = Health - 5;
+                            SG.setIson(false);
+                        } else {
+                            Health = Health - 10;
+                        }
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
+                        m.set(p.getTileX(), p.getTileY());
+                      //  HG.increaseHealth();
+                       HG.update();
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
+                        SG.setIson(true);
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
+                        CG.increasescore();
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
+                        DG.increasescore();
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
+                        if (SG.ison()) {
+                            Health = Health - 30;
+                            SG.setIson(false);
+                        } else {
+                            Health = Health - 50;
+                        }
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
+                     m.setflag(p.getTileX(), p.getTileY());
+                     Point mypoint =new Point();
+                     mypoint.x=p.getTileX();
+                     mypoint.y=p.getTileY();
+                     originator.set(mypoint);
+                     caretaker.addMemento(originator.storeInMemento());
+                     isCheckPoint=true;
+                     currentArticle++;
+                    }
+                     if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
+                        if(bullet>=6){  
+                        }else{
+                            bullet=bullet+1;
+                        }
+                         m.set(p.getTileX(), p.getTileY());
+                    }
+                }
+                up = false;
+                down = true;
+                right = false;
+                left = false;
+                lastPressed = "down";
+            }
+            if (keycode == KeyEvent.VK_LEFT) {
+                if (!m.getMap(p.getTileX() - 1, p.getTileY()).equals("w") && !m.getMap(p.getTileX() - 1, p.getTileY()).equals("t")) {
+                    p.move(-1, 0);
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("s")) {
+                        if (SG.ison()) {
+                            Health = Health - 5;
+                            SG.setIson(false);
+                        } else {
+                            Health = Health - 10;
+                        }
+                        m.set(p.getTileX(), p.getTileY());
+
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
+                        m.set(p.getTileX(), p.getTileY());
+                      //  HG.increaseHealth();
+                       HG.update();
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
+                        SG.setIson(true);
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
+                        CG.increasescore();
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
+                        DG.increasescore();
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
+                        if (SG.ison()) {
+                            Health = Health - 30;
+                            SG.setIson(false);
+                        } else {
+                            Health = Health - 50;
+                        }
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
+                     m.setflag(p.getTileX(), p.getTileY());
+                     Point mypoint =new Point();
+                     mypoint.x=p.getTileX();
+                     mypoint.y=p.getTileY();
+                     originator.set(mypoint);
+                     caretaker.addMemento(originator.storeInMemento());
+                     isCheckPoint=true;
+                     currentArticle++;
+                    }
+                     if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
+                        if(bullet>=6){  
+                        }else{
+                            bullet=bullet+1;
+                        }
+                         m.set(p.getTileX(), p.getTileY());
+                    }
+                }
+                up = false;
+                down = false;
+                right = false;
+                left = true;
+                lastPressed = "left";
+
+            }
+            if (keycode == KeyEvent.VK_RIGHT) {
+                if (!m.getMap(p.getTileX() + 1, p.getTileY()).equals("w") && !m.getMap(p.getTileX() + 1, p.getTileY()).equals("t")) {
+                    p.move(1, 0);
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("s")) {
+
+                        if (SG.ison()) {
+                            Health = Health - 5;
+                            SG.setIson(false);
+                        } else {
+                            Health = Health - 10;
+                        }
+                        m.set(p.getTileX(), p.getTileY());
+
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
+                        m.set(p.getTileX(), p.getTileY());
+                     //   HG.increaseHealth();
+                      HG.update();
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
+                        SG.setIson(true);
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
+                        CG.increasescore();
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
+                        DG.increasescore();
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
+                        if (SG.ison()) {
+                            Health = Health - 30;
+                            SG.setIson(false);
+                        } else {
+                            Health = Health - 50;
+                        }
+                        m.set(p.getTileX(), p.getTileY());
+                    }
+                    if(m.getMap(p.getTileX(), p.getTileY()).equals("z")){
+                     m.setflag(p.getTileX(), p.getTileY());
+                     Point mypoint =new Point();
+                     mypoint.x=p.getTileX();
+                     mypoint.y=p.getTileY();
+                     originator.set(mypoint);
+                     caretaker.addMemento(originator.storeInMemento());
+                     isCheckPoint=true;
+                     currentArticle++;
+                    }
+                     if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
+                        if(bullet>=6){  
+                        }else{
+                            bullet=bullet+1;
+                        }
+                         m.set(p.getTileX(), p.getTileY());
+                    }
+                    
+                }
+                up = false;
+                down = false;
+                right = true;
+                left = false;
+                lastPressed = "right";
+
+            }
             }
             if (keycode == KeyEvent.VK_SPACE) {
                  if(bullet!=0){
@@ -563,4 +843,30 @@ public class Board extends JPanel implements ActionListener {
         jf.setText("0" + time / 60);
 
     }
+    public static void music() throws IOException{
+
+
+
+    String filename = "mus.wav";
+    ContinuousAudioDataStream loop = null;
+    InputStream in = null;
+    try {
+        in = new FileInputStream(filename);
+    } catch (FileNotFoundException ex) {
+        System.out.println("File not found");
+    }
+    try {
+        AudioStream s = new AudioStream(in);
+        AudioData MD;
+        AudioPlayer.player.start(s);
+    } catch (IOException ex) {
+        System.out.println(ex.getMessage());
+    }
+    }
 }
+
+
+
+    
+    
+

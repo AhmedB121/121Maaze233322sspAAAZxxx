@@ -35,5 +35,12 @@ public class HealthGift extends Gift{
      public Image getimg() {
         return heart;
     }
+     @Override
+    public void update()
+    {
+        increaseHealth();
+    }
+    
+     
     
 }

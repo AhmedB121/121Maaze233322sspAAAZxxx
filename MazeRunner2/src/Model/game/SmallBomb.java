@@ -22,6 +22,7 @@ public class SmallBomb extends Bombs {
         super.Bombimg = img.getImage();
         setDamage(10);
     }
+    
 
    
 

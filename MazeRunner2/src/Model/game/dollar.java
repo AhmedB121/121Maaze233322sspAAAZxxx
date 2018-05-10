@@ -18,7 +18,7 @@ public class dollar extends Gift{
    protected Image dollars;
     public dollar() {
         super("dollar");
-         ImageIcon img=new ImageIcon("Dollar.png");
+         ImageIcon img=new ImageIcon("Gems.jpg");
          dollars=img.getImage();
     }
     
