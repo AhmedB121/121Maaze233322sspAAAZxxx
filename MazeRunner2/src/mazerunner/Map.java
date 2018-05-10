@@ -21,7 +21,7 @@ public class Map {
     private int coloums=30;
     private int rows=30;
     private char MAP[][]=new char[coloums][rows];
-    private String Map[]=new String[31];
+    public String Map[]=new String[31];
     private Image grass,wall,finish,start,tree,Armour,clock,bicon;
     public Map()
     {

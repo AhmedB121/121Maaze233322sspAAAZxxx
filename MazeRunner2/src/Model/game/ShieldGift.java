@@ -30,8 +30,8 @@ protected  int protectHeath=5;
         return sheild;
     }
 
-    public boolean ison() {
-         System.out.println(ison);
+    public  boolean ison() {
+        
         return ison;
     }
 

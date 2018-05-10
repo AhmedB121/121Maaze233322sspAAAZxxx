@@ -10,7 +10,12 @@ import static View.game.MazeRunner.f;
 import com.sun.prism.paint.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import javax.swing.*;
+import mazerunner.Board;
+import mazerunner.Map;
 
 /**
  *
@@ -68,7 +73,30 @@ public class MainMenu {
         btn2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Continue is pressed");
+                                JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            Scanner srscanner = null;
+             try{
+        srscanner=new Scanner(file);
+                }catch(FileNotFoundException err)
+                {
+                    System.out.println("Error Loading Map");
+                }
+            
+     
+            for (int i=0;i<31;i++){
+                Board.m.Map[i]=srscanner.next();
+            }
+       Board.Health=srscanner.nextInt();
+       Board.score=srscanner.nextInt();
+       Board.bullet=srscanner.nextInt();
+            srscanner.close();
+        }
+        f.setVisible(true);
+                startMenu.dispose();
             }
         });
          

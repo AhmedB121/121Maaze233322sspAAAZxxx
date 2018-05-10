@@ -14,6 +14,7 @@ import Model.game.SmallBomb;
 import Model.game.bulletsgift;
 import Model.game.coin;
 import Model.game.dollar;
+import View.game.PauseMenu;
 import static View.game.SettingsGui.check1;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -48,14 +49,14 @@ public class Board extends JPanel implements ActionListener {
     private Timer tm = new Timer(1000, this);
     JTextField jf = new JTextField(10);
     int time = 0;
-    private Map m;
+    public static Map m;
     private Player p;
     private SmallBomb SB;
     Bombfactory bombfactory = new Bombfactory();
     Giftfactory giftfactory = new Giftfactory();
     private Bombs BB = bombfactory.choosetype("big bomb");
     private Gift HG = giftfactory.choosetype("Health gift");
-    private Gift SG = giftfactory.choosetype("Shield Gift");
+    public Gift SG = giftfactory.choosetype("Shield Gift");
     private Gift BG = giftfactory.choosetype("Bullet gift");
     private Gift CG = giftfactory.choosetype("coin");
    private Gift DG = giftfactory.choosetype("dollar");
@@ -777,48 +778,7 @@ public class Board extends JPanel implements ActionListener {
                 }
             }
             if (keycode == KeyEvent.VK_ESCAPE) {
-                JFrame pauseFrame = new JFrame("Pause menu");
-                // pauseFrame.getContentPane().setLayout(new ViewportLayout());
-                ((JComponent) pauseFrame.getContentPane()).setOpaque(false);
-
-                JLabel background = new JLabel(new ImageIcon("Background.jpg"));
-                pauseFrame.add(background);
-
-                pauseFrame.setSize(400, 500);
-                pauseFrame.setUndecorated(true);
-                pauseFrame.setVisible(true);
-                pauseFrame.setLocationRelativeTo(null);
-                JButton btncontinue = new JButton("Continue");
-                btncontinue.setBounds(120, 50, 130, 50);
-                pauseFrame.add(btncontinue);
-                btncontinue.setFocusable(false);
-
-                JButton btnexit = new JButton("Exit");
-                btnexit.setBounds(120, 140, 130, 50);
-                pauseFrame.add(btnexit);
-                pauseFrame.setLayout(null);
-
-                JLabel str = new JLabel("GAME PAUSED");
-                str.setBounds(129, 10, 130, 50);
-                pauseFrame.add(str);
-
-                btnexit.setFocusable(false);
-
-                View.game.MazeRunner.f.setEnabled(false);
-                btncontinue.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        pauseFrame.dispose();
-                        View.game.MazeRunner.f.setVisible(true);
-                        View.game.MazeRunner.f.setEnabled(true);
-                    }
-                });
-                btnexit.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.exit(0);
-                    }
-                });
+                new PauseMenu();
             }
         }
 
