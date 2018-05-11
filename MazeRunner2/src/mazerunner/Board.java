@@ -57,10 +57,6 @@ public class Board extends JPanel implements ActionListener {
     Bombfactory bombfactory = new Bombfactory();
     Giftfactory giftfactory = new Giftfactory();
     private Bombs BB = bombfactory.choosetype("big bomb");
-//    private Bombs BB = new Bigbombs();
-//    private Bombs BBB = new DrawBomb(new Bigbombs());
-//     private Bombs SB = new SmallBomb();
-//    private Bombs SBB = new DrawBomb((BombDecorator)SB);
     private Gift HG = giftfactory.choosetype("Health gift");
     public Gift SG = giftfactory.choosetype("Shield Gift");
     private Gift BG = giftfactory.choosetype("Bullet gift");

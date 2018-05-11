@@ -32,34 +32,38 @@ import mazerunner.Board;
 public class PauseMenu {
 
     public PauseMenu() {
-        JButton btnSave = new JButton("Save");
-        btnSave.setBounds(120, 300, 130, 50);
         JFrame startMenu = new JFrame();
-        startMenu.setTitle("Main Menu");
-        startMenu.setUndecorated(true);
-        JButton btn1 = new JButton();
-        btn1.setBounds(175, 150, 140, 50);
-        btn1.setOpaque(false);
-        btn1.setContentAreaFilled(false);
-        btn1.setBorderPainted(false);
-        btn1.setVisible(true);
-        startMenu.add(btn1);
-        startMenu.setSize(470, 470);
-        startMenu.setLayout(null);
-        startMenu.add(btnSave);
-
-        startMenu.setLocationRelativeTo(null);
-        ImageIcon backimg = new ImageIcon("themainmenu.png");
+          ImageIcon backimg = new ImageIcon("blue.jpg");
         JLabel backgroundmenu = new JLabel(backimg);
         backgroundmenu.setSize(500, 500);
         startMenu.add(backgroundmenu);
+        startMenu.setTitle("Main Menu");
+        JButton btnSave = new JButton("Save");
+        btnSave.setBounds(175, 200, 140, 50);
+        startMenu.add(btnSave);
+        startMenu.setUndecorated(true);
+        JButton btn1 = new JButton("Continue");
+        btn1.setBounds(175, 100, 140, 50);
+        startMenu.add(btn1);
+        startMenu.setSize(470, 470);
+        startMenu.setLayout(null);
+        JButton btnexit = new JButton("Exit");
+        btnexit.setBounds(175, 300, 140, 50);
+        startMenu.add(btnexit);
+        startMenu.setLocationRelativeTo(null);
         startMenu.setVisible(true);
-
         btn1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 f.setVisible(true);
                 startMenu.dispose();
+            }
+        });
+
+        btnexit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(1);
             }
         });
 
@@ -113,59 +117,7 @@ public class PauseMenu {
                 System.exit(0);
             }
         });
-        
-           JButton btnS3 = new JButton();
-        btnS3.setBounds(175, 250, 140, 50);
-        btnS3.setOpaque(false);
-        btnS3.setContentAreaFilled(false);
-        btnS3.setBorderPainted(false);
-        btnS3.setOpaque(false);
-
-        btnS3.setVisible(true);
-        startMenu.add(btnS3);
-        startMenu.setSize(470, 470);
-        startMenu.setLayout(null);
-        startMenu.setLocationRelativeTo(null);
-        // ImageIcon backimg=new ImageIcon("themainmenu.png");
-        // JLabel backgroundmenu=new JLabel(backimg);
-        backgroundmenu.setSize(500, 500);
-        startMenu.add(backgroundmenu);
-        startMenu.setVisible(true);
-
-        btnS3.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new SettingsGui();
-
-            }
-        });
-
-        JButton btn4 = new JButton();
-        btn4.setBounds(175, 300, 140, 50);
-        btn4.setOpaque(false);
-        btn4.setContentAreaFilled(false);
-        btn4.setBorderPainted(false);
-        btn4.setVisible(true);
-        startMenu.add(btn4);
-        startMenu.setSize(470, 470);
-        startMenu.setLayout(null);
-        startMenu.setLocationRelativeTo(null);
-        // ImageIcon backimg=new ImageIcon("themainmenu.png");
-        // JLabel backgroundmenu=new JLabel(backimg);
-        backgroundmenu.setSize(500, 500);
-        startMenu.add(backgroundmenu);
-        startMenu.setVisible(true);
-
-        btn4.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, " About  is pressed");
-
-            }
-        });
 
     }
 
-
-    }
-
+}
