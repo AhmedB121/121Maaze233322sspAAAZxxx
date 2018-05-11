@@ -22,9 +22,9 @@ import mazerunner.Map;
  * @author dell-pc
  */
 public class MainMenu {
-
+ public static JFrame startMenu = new JFrame();
     public MainMenu() {
-        JFrame startMenu = new JFrame();
+        
         startMenu.setTitle("Main Menu");
         startMenu.setUndecorated(true);
         JButton btn1 = new JButton();
@@ -161,7 +161,7 @@ else {
         btn4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, " About  is pressed");
+                JOptionPane.showMessageDialog(null, "CopyRight Ahmed Hamid,Amr Akmal,Ahmed Bahey,Zeyad!");
 
             }
         });

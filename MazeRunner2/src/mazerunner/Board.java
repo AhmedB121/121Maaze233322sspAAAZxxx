@@ -889,6 +889,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void logic() {
+        if(!View.game.MainMenu.startMenu.isVisible()&& !View.game.PauseMenu.startMenu.isVisible())
         time++;
         if (time == 3600) {
             JOptionPane.showMessageDialog(null, "Time is up");

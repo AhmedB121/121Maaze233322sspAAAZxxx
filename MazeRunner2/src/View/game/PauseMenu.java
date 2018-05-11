@@ -7,6 +7,7 @@ package View.game;
 
 import Model.game.ShieldGift;
 import static View.game.MazeRunner.f;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,25 +31,26 @@ import mazerunner.Board;
  * @author dell-pc
  */
 public class PauseMenu {
-
+    public static JFrame startMenu = new JFrame();
     public PauseMenu() {
-        JFrame startMenu = new JFrame();
-          ImageIcon backimg = new ImageIcon("blue.jpg");
-        JLabel backgroundmenu = new JLabel(backimg);
-        backgroundmenu.setSize(500, 500);
-        startMenu.add(backgroundmenu);
+        
+          
+      
+     startMenu.getContentPane().setBackground(Color.BLUE);
+
         startMenu.setTitle("Main Menu");
         JButton btnSave = new JButton("Save");
-        btnSave.setBounds(175, 200, 140, 50);
+        btnSave.setBounds(150, 200, 140, 50);
         startMenu.add(btnSave);
-        startMenu.setUndecorated(true);
+     //   startMenu.setUndecorated(true);
         JButton btn1 = new JButton("Continue");
-        btn1.setBounds(175, 100, 140, 50);
+        btn1.setFocusable(false);
+        btn1.setBounds(150, 100, 140, 50);
         startMenu.add(btn1);
         startMenu.setSize(470, 470);
         startMenu.setLayout(null);
         JButton btnexit = new JButton("Exit");
-        btnexit.setBounds(175, 300, 140, 50);
+        btnexit.setBounds(150, 300, 140, 50);
         startMenu.add(btnexit);
         startMenu.setLocationRelativeTo(null);
         startMenu.setVisible(true);
