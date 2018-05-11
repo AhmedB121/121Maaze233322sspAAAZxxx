@@ -29,4 +29,9 @@ public class dollar extends Gift{
        public void increasescore(){
            Board.score+=incscore;
      }
+       
+        @Override
+    public void update() {
+        increasescore();
+    }
 }

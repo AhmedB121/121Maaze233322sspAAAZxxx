@@ -308,7 +308,7 @@ public class Board extends JPanel implements ActionListener {
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
-                            DG.increasescore();
+                            DG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
@@ -371,7 +371,8 @@ public class Board extends JPanel implements ActionListener {
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
-                            CG.update();
+                            // CG.update();
+                            DG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
@@ -430,12 +431,12 @@ public class Board extends JPanel implements ActionListener {
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
-                           // CG.increasescore();
-                           CG.update();
+                            // CG.increasescore();
+                            CG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
-                            DG.increasescore();
+                            DG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
@@ -496,12 +497,12 @@ public class Board extends JPanel implements ActionListener {
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
-                          //  CG.increasescore();
+                            //  CG.increasescore();
                             CG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
-                            DG.increasescore();
+                            DG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
@@ -563,12 +564,12 @@ public class Board extends JPanel implements ActionListener {
                         }
 
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
-                           // CG.increasescore();
+                            // CG.increasescore();
                             CG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
-                            DG.increasescore();
+                            DG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
@@ -627,12 +628,12 @@ public class Board extends JPanel implements ActionListener {
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
-                          //  CG.increasescore();
+                            //  CG.increasescore();
                             CG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
-                            DG.increasescore();
+                            DG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
@@ -696,7 +697,7 @@ public class Board extends JPanel implements ActionListener {
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
-                            DG.increasescore();
+                            DG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
@@ -757,12 +758,12 @@ public class Board extends JPanel implements ActionListener {
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
-                           // CG.increasescore();
-                           CG.update();
+                            // CG.increasescore();
+                            CG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("d")) {
-                            DG.increasescore();
+                            DG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("b")) {
