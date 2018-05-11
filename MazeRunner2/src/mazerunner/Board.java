@@ -1,6 +1,7 @@
 package mazerunner;
 
 import Model.game.Bigbombs;
+import Model.game.BombDecorator;
 import Model.game.Bombfactory;
 import Model.game.Bombs;
 import Model.game.Bullets;
@@ -14,6 +15,7 @@ import Model.game.SmallBomb;
 import Model.game.bulletsgift;
 import Model.game.coin;
 import Model.game.dollar;
+import static View.game.MazeRunner.f;
 import View.game.PauseMenu;
 import static View.game.SettingsGui.check1;
 import java.awt.BorderLayout;
@@ -42,7 +44,7 @@ import sun.audio.ContinuousAudioDataStream;
 public class Board extends JPanel implements ActionListener {
 
     public int currentArticle = 0;
-    public boolean isCheckPoint;
+    public static boolean isCheckPoint;
     CareTaker caretaker = new CareTaker();
     Originator originator = new Originator();
     private Timer timer;
@@ -50,11 +52,15 @@ public class Board extends JPanel implements ActionListener {
     JTextField jf = new JTextField(10);
     int time = 0;
     public static Map m;
-    private Player p;
+    public static Player p;
     private SmallBomb SB;
     Bombfactory bombfactory = new Bombfactory();
     Giftfactory giftfactory = new Giftfactory();
     private Bombs BB = bombfactory.choosetype("big bomb");
+//    private Bombs BB = new Bigbombs();
+//    private Bombs BBB = new DrawBomb(new Bigbombs());
+//     private Bombs SB = new SmallBomb();
+//    private Bombs SBB = new DrawBomb((BombDecorator)SB);
     private Gift HG = giftfactory.choosetype("Health gift");
     public Gift SG = giftfactory.choosetype("Shield Gift");
     private Gift BG = giftfactory.choosetype("Bullet gift");
@@ -71,6 +77,8 @@ public class Board extends JPanel implements ActionListener {
     public static String lastPressed = null;
     private ArrayList<Bullets> bullets = new ArrayList<>();
     private boolean flag = false;
+    public static int xsave = 0, ysave = 0;
+    public static boolean haveArmour = false;
 
     public Board() {
         add(jf);
@@ -92,11 +100,11 @@ public class Board extends JPanel implements ActionListener {
             win = true;
         }
         logic();
-//        try {
-//           // music();
-//        } catch (IOException ex) {
-//            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            music();
+        } catch (IOException ex) {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
         repaint();
 
     }
@@ -123,6 +131,7 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if (m.getMap(x, y).equals("s")) {
                         g.drawImage(SB.getbomb(), x * 32, y * 32, null);
+                        // g.drawImage(SBB.getbomb(), x * 32, y * 32, null);
                     }
                     if (m.getMap(x, y).equals("h")) {
                         g.drawImage(HG.getimg(), x * 32, y * 32, null);
@@ -138,6 +147,8 @@ public class Board extends JPanel implements ActionListener {
                     }
                     if (m.getMap(x, y).equals("b")) {
                         g.drawImage(BB.getbomb(), x * 32, y * 32, null);
+                        // g.drawImage(BBB.getbomb(), x * 32, y * 32, null);
+
                     }
                     if (m.getMap(x, y).equals("t")) {
                         g.drawImage(m.getgrassWall(), x * 32, y * 32, null);
@@ -155,6 +166,7 @@ public class Board extends JPanel implements ActionListener {
 
                     }
                 }
+
             }
 
             if (left) {
@@ -169,23 +181,11 @@ public class Board extends JPanel implements ActionListener {
             if (down) {
                 g.drawImage(p.getPlayer4(), p.getTileX() * 32, p.getTileY() * 32, null);
             }
-//            if (isCheckPoint && Health <= 0 && currentArticle >= 1) {
-//                Point aPoint = new Point();
-//                currentArticle--;
-//
-//                aPoint = originator.restoreFromMemento(caretaker.getMemento(currentArticle));
-//                p.setTileX(aPoint.x);
-//                p.setTileY(aPoint.y);
-//                Health = 100;
-//                g.drawImage(p.getPlayer4(), aPoint.x * 32, aPoint.y * 32, null);
-//
-//            }
 
         }
         if (isCheckPoint && Health <= 0 && currentArticle >= 1) {
             Point aPoint = new Point();
             currentArticle--;
-
             aPoint = originator.restoreFromMemento(caretaker.getMemento(currentArticle));
             p.setTileX(aPoint.x);
             p.setTileY(aPoint.y);
@@ -196,26 +196,40 @@ public class Board extends JPanel implements ActionListener {
 
         g.setColor(Color.red);
         if (win) {
-            //       Image winner;
-            //g.drawString(Finishstr, 500, 500);
-//            ImageIcon img = new ImageIcon("won.jpg");
-//            winner = img.getImage();
-//            g.drawImage(winner, 500, 500, null);
-//            JButton btnSave = new JButton("Save");
-//
-//            JFrame pauseFrame = new JFrame("Pause menu");
-//            pauseFrame.setUndecorated(true);
-//            pauseFrame.setSize(400, 500);
-//            pauseFrame.setLayout(null);
-//            pauseFrame.setLocationRelativeTo(null);
-//            JLabel background = new JLabel(new ImageIcon("won.jpg"));
-//            pauseFrame.add(background);
-//            pauseFrame.setVisible(true);
+
+            View.game.MazeRunner.f.dispose();
+            JFrame startMenu = new JFrame();
+            startMenu.setTitle("YOU WON");
+            startMenu.setUndecorated(true);
+            startMenu.setSize(700, 700);
+            startMenu.setLayout(null);
+            startMenu.setLocationRelativeTo(null);
+            ImageIcon backimg = new ImageIcon("won.jpg");
+            JLabel backgroundmenu = new JLabel(backimg);
+            backgroundmenu.setSize(700, 700);
+            startMenu.add(backgroundmenu);
+            startMenu.setVisible(true);
+           
+
 
         }
         if (Health <= 0 && isCheckPoint == false) {
             Health = 0;
-            g.drawString("Game Over", 500, 500);
+            // g.drawString("Game Over", 500, 500);
+//           View.game.MazeRunner.f.dispose();
+//         JFrame startMenu = new JFrame();
+//        startMenu.setTitle("YOU LOST");
+//        startMenu.setUndecorated(true);
+//        startMenu.setSize(470, 470);
+//        startMenu.setLayout(null);
+//        startMenu.setLocationRelativeTo(null);
+//        ImageIcon backimg = new ImageIcon("won.jpg");
+//        JLabel backgroundmenu = new JLabel(backimg);
+//        backgroundmenu.setSize(500, 500);
+//        startMenu.add(backgroundmenu);
+//        startMenu.setVisible(true);
+//           
+
         }
         g.setColor(Color.BLACK);
         g.drawRect(40, 0, 100, 30);
@@ -227,6 +241,11 @@ public class Board extends JPanel implements ActionListener {
             g.setColor(Color.BLACK);
         }
 
+        if (haveArmour) {
+            SG.setIson(true);
+        } else {
+            SG.setIson(false);
+        }
         if (SG.ison()) {
             g.drawImage(m.getArmour(), 165, 0, null);
         }
@@ -244,8 +263,6 @@ public class Board extends JPanel implements ActionListener {
         g.drawImage(clock, 400, 0, null);
         g.drawString(Integer.toString(bullet), 650, 20);
         g.drawImage(m.getbicon(), 600, 0, null);
-        //g.drawImage(m.getclock(), 400,0, null);
-
         int i = 0;
         if (flag) {
 
@@ -287,6 +304,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
                                 SG.setIson(false);
+                                haveArmour = false;
+
                             } else {
                                 Health = Health - 10;
                             }
@@ -299,6 +318,7 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            haveArmour = true;
                             m.set(p.getTileX(), p.getTileY());
                         }
 
@@ -329,6 +349,9 @@ public class Board extends JPanel implements ActionListener {
                             isCheckPoint = true;
                             currentArticle++;
 
+                            xsave = p.getTileX();
+                            ysave = p.getTileY();
+
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
                             if (bullet >= 6) {
@@ -351,6 +374,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
                                 SG.setIson(false);
+                                haveArmour = false;
+
                             } else {
                                 Health = Health - 10;
                             }
@@ -363,6 +388,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            haveArmour = true;
+
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
@@ -392,6 +419,9 @@ public class Board extends JPanel implements ActionListener {
                             caretaker.addMemento(originator.storeInMemento());
                             isCheckPoint = true;
                             currentArticle++;
+
+                            xsave = p.getTileX();
+                            ysave = p.getTileY();
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
                             if (bullet >= 6) {
@@ -414,6 +444,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
                                 SG.setIson(false);
+                                haveArmour = false;
+
                             } else {
                                 Health = Health - 10;
                             }
@@ -427,6 +459,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            haveArmour = true;
+
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
@@ -456,6 +490,9 @@ public class Board extends JPanel implements ActionListener {
                             caretaker.addMemento(originator.storeInMemento());
                             isCheckPoint = true;
                             currentArticle++;
+
+                            xsave = p.getTileX();
+                            ysave = p.getTileY();
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
                             if (bullet >= 6) {
@@ -480,6 +517,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
                                 SG.setIson(false);
+                                haveArmour = false;
+
                             } else {
                                 Health = Health - 10;
                             }
@@ -493,10 +532,11 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            haveArmour = true;
+
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
-                            //  CG.increasescore();
                             CG.update();
                             m.set(p.getTileX(), p.getTileY());
                         }
@@ -522,6 +562,8 @@ public class Board extends JPanel implements ActionListener {
                             caretaker.addMemento(originator.storeInMemento());
                             isCheckPoint = true;
                             currentArticle++;
+                            xsave = p.getTileX();
+                            ysave = p.getTileY();
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
                             if (bullet >= 6) {
@@ -547,6 +589,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
                                 SG.setIson(false);
+                                haveArmour = false;
+
                             } else {
                                 Health = Health - 10;
                             }
@@ -559,6 +603,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            haveArmour = true;
+
                             m.set(p.getTileX(), p.getTileY());
                         }
 
@@ -590,6 +636,9 @@ public class Board extends JPanel implements ActionListener {
                             isCheckPoint = true;
                             currentArticle++;
 
+                            xsave = p.getTileX();
+                            ysave = p.getTileY();
+
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
                             if (bullet >= 6) {
@@ -612,6 +661,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
                                 SG.setIson(false);
+                                haveArmour = false;
+
                             } else {
                                 Health = Health - 10;
                             }
@@ -624,6 +675,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            haveArmour = true;
+
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
@@ -653,6 +706,9 @@ public class Board extends JPanel implements ActionListener {
                             caretaker.addMemento(originator.storeInMemento());
                             isCheckPoint = true;
                             currentArticle++;
+
+                            xsave = p.getTileX();
+                            ysave = p.getTileY();
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
                             if (bullet >= 6) {
@@ -675,6 +731,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
                                 SG.setIson(false);
+                                haveArmour = false;
+
                             } else {
                                 Health = Health - 10;
                             }
@@ -688,6 +746,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            haveArmour = true;
+
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
@@ -717,6 +777,9 @@ public class Board extends JPanel implements ActionListener {
                             caretaker.addMemento(originator.storeInMemento());
                             isCheckPoint = true;
                             currentArticle++;
+
+                            xsave = p.getTileX();
+                            ysave = p.getTileY();
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
                             if (bullet >= 6) {
@@ -741,6 +804,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
                                 SG.setIson(false);
+                                haveArmour = false;
+
                             } else {
                                 Health = Health - 10;
                             }
@@ -754,6 +819,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            haveArmour = true;
+
                             m.set(p.getTileX(), p.getTileY());
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("c")) {
@@ -783,6 +850,9 @@ public class Board extends JPanel implements ActionListener {
                             caretaker.addMemento(originator.storeInMemento());
                             isCheckPoint = true;
                             currentArticle++;
+
+                            xsave = p.getTileX();
+                            ysave = p.getTileY();
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("B")) {
                             if (bullet >= 6) {
@@ -826,7 +896,9 @@ public class Board extends JPanel implements ActionListener {
         time++;
         if (time == 3600) {
             JOptionPane.showMessageDialog(null, "Time is up");
+
             System.exit(0);
+
         }
         jf.setText("0" + time / 60);
 

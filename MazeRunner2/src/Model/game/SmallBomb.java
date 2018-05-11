@@ -14,16 +14,30 @@ import javax.swing.*;
  *
  * @author Ahmed Bahey
  */
+//public class SmallBomb extends Bombs {
+//
+//    public SmallBomb() {
+//        super();
+//        ImageIcon img = new ImageIcon("Redbomb.gif");
+//        super.Bombimg = img.getImage();
+//        setDamage(10);
+//    }
+//    
+//
+//   
+//
+//}
+
 public class SmallBomb extends Bombs {
 
-    public SmallBomb() {
+   public SmallBomb() {
         super();
         ImageIcon img = new ImageIcon("Redbomb.gif");
         super.Bombimg = img.getImage();
         setDamage(10);
-    }
     
+    }
 
-   
+  
 
 }

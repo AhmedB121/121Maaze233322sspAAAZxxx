@@ -19,7 +19,8 @@ public class Bigbombs extends Bombs{
         super.Bombimg = img.getImage();
         setDamage(20);
     }
-    
+
+   
    
     
     

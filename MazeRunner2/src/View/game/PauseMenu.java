@@ -6,6 +6,8 @@
 package View.game;
 
 import Model.game.ShieldGift;
+import static View.game.MazeRunner.f;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -20,6 +22,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import mazerunner.Board;
 
 /**
@@ -29,87 +32,140 @@ import mazerunner.Board;
 public class PauseMenu {
 
     public PauseMenu() {
-        JButton btnSave=new JButton("Save");
+        JButton btnSave = new JButton("Save");
         btnSave.setBounds(120, 300, 130, 50);
-       
-        JFrame pauseFrame = new JFrame("Pause menu");
-        pauseFrame.add(btnSave);
-        pauseFrame.setUndecorated(true);
-        JButton btncontinue = new JButton("Continue");
-        btncontinue.setBounds(120, 50, 130, 50);
-        btncontinue.setFocusable(false);
-        btncontinue.setVisible(true);
-        pauseFrame.add(btncontinue);
-        pauseFrame.setSize(400, 500);
-        pauseFrame.setLayout(null);
-        pauseFrame.setLocationRelativeTo(null);
-        JLabel background = new JLabel(new ImageIcon("Background.jpg"));
-        pauseFrame.add(background);
-        pauseFrame.setVisible(true);
-        JButton btnexit = new JButton("Exit");
-        btnexit.setBounds(120, 140, 130, 50);
-        pauseFrame.add(btnexit);
-        btnexit.setFocusable(false);
-        View.game.MazeRunner.f.setEnabled(false);
-        btncontinue.addActionListener(new ActionListener() {
+        JFrame startMenu = new JFrame();
+        startMenu.setTitle("Main Menu");
+        startMenu.setUndecorated(true);
+        JButton btn1 = new JButton();
+        btn1.setBounds(175, 150, 140, 50);
+        btn1.setOpaque(false);
+        btn1.setContentAreaFilled(false);
+        btn1.setBorderPainted(false);
+        btn1.setVisible(true);
+        startMenu.add(btn1);
+        startMenu.setSize(470, 470);
+        startMenu.setLayout(null);
+        startMenu.add(btnSave);
+
+        startMenu.setLocationRelativeTo(null);
+        ImageIcon backimg = new ImageIcon("themainmenu.png");
+        JLabel backgroundmenu = new JLabel(backimg);
+        backgroundmenu.setSize(500, 500);
+        startMenu.add(backgroundmenu);
+        startMenu.setVisible(true);
+
+        btn1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pauseFrame.dispose();
-                View.game.MazeRunner.f.setVisible(true);
-                View.game.MazeRunner.f.setEnabled(true);
+                f.setVisible(true);
+                startMenu.dispose();
             }
         });
-        btnexit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              //  boolean  isarmoron =Board.SG.ison();
-              // saving with zero score
-              
-                int savehealth=Board.Health;
-                int savescore=Board.score;
-                int savebullets=Board.bullet;
-              //  boolean armorweared=
-                String [] savemap=new String[31];
-                for (int i=0;i<31;i++){
-                    savemap[i]=Board.m.Map[i];
-                    
+                int playerx = 0;
+                int playery = 0;
+                int savehealth = Board.Health;
+                int savescore = Board.score;
+                int savebullets = Board.bullet;
+                boolean arm = Board.haveArmour;
+                String[] savemap = new String[31];
+                for (int i = 0; i < 31; i++) {
+                    savemap[i] = Board.m.Map[i];
+
                 }
-                
-                
-              /////////////////////////////////////////////////////////  
-                       JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        int result = fileChooser.showOpenDialog(null);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-                   try{
-                       BufferedWriter writer=new BufferedWriter(new FileWriter(file));
-                    for (int i=0;i<31;i++)
-                      writer.write(savemap[i]+System.lineSeparator());
-                    
-                  writer.write(savehealth+System.lineSeparator());
-                  writer.write(savescore+System.lineSeparator());
-                  writer.write(savebullets+System.lineSeparator());
-                  writer.close();
-                   }
-                   catch(IOException ex)
-                   {
-                       ex.printStackTrace();
-                   }
-            
-        }
-                
-                
+                if (Board.isCheckPoint) {
+                    playerx = Board.xsave;
+                    playery = Board.ysave;
+                }
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+                int result = fileChooser.showOpenDialog(null);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    try {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                        for (int i = 0; i < 31; i++) {
+                            writer.write(savemap[i] + System.lineSeparator());
+                        }
+
+                        writer.write(savehealth + System.lineSeparator());
+                        writer.write(savescore + System.lineSeparator());
+                        writer.write(savebullets + System.lineSeparator());
+                        writer.write(playerx + System.lineSeparator());
+                        writer.write(playery + System.lineSeparator());
+                        if (arm) {
+                            writer.write(1 + System.lineSeparator());
+                        } else {
+                            writer.write(0 + System.lineSeparator());
+                        }
+
+                        writer.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+
+                }
+
                 System.exit(0);
             }
         });
         
-        
+           JButton btnS3 = new JButton();
+        btnS3.setBounds(175, 250, 140, 50);
+        btnS3.setOpaque(false);
+        btnS3.setContentAreaFilled(false);
+        btnS3.setBorderPainted(false);
+        btnS3.setOpaque(false);
+
+        btnS3.setVisible(true);
+        startMenu.add(btnS3);
+        startMenu.setSize(470, 470);
+        startMenu.setLayout(null);
+        startMenu.setLocationRelativeTo(null);
+        // ImageIcon backimg=new ImageIcon("themainmenu.png");
+        // JLabel backgroundmenu=new JLabel(backimg);
+        backgroundmenu.setSize(500, 500);
+        startMenu.add(backgroundmenu);
+        startMenu.setVisible(true);
+
+        btnS3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SettingsGui();
+
+            }
+        });
+
+        JButton btn4 = new JButton();
+        btn4.setBounds(175, 300, 140, 50);
+        btn4.setOpaque(false);
+        btn4.setContentAreaFilled(false);
+        btn4.setBorderPainted(false);
+        btn4.setVisible(true);
+        startMenu.add(btn4);
+        startMenu.setSize(470, 470);
+        startMenu.setLayout(null);
+        startMenu.setLocationRelativeTo(null);
+        // ImageIcon backimg=new ImageIcon("themainmenu.png");
+        // JLabel backgroundmenu=new JLabel(backimg);
+        backgroundmenu.setSize(500, 500);
+        startMenu.add(backgroundmenu);
+        startMenu.setVisible(true);
+
+        btn4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, " About  is pressed");
+
+            }
+        });
+
     }
-}
+
+
+    }
+
