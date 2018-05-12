@@ -229,30 +229,16 @@ public class Board extends JPanel implements ActionListener {
             startMenu.add(backgroundmenu);
             startMenu.setVisible(true);
             
-            int input = JOptionPane.showOptionDialog(null, "You Won ! Press Ok to Exit the game", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-    
-
-if(input == JOptionPane.OK_OPTION)
-{
-    System.exit(0);
-}
-else
-    System.exit(0);
+          JOptionPane.showMessageDialog(null,"You Won ! Press Ok to Exit the game");
+          System.exit(0);
 
         }
         if (Health <= 0 && isCheckPoint == false) {
             Health = 0;
                         View.game.MazeRunner.f.dispose();
 
-int input = JOptionPane.showOptionDialog(null, "You Lost ! Press Ok to Exit the Game", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-    
-
-if(input == JOptionPane.OK_OPTION)
-{
-    System.exit(0);
-}
-else
-    System.exit(0);
+JOptionPane.showMessageDialog(null, "You Lost ! Press ok to Exit the game");
+System.exit(0);
           //   g.drawString("Game Over", 500, 500);
 //           View.game.MazeRunner.f.dispose();
 //         JFrame startMenu = new JFrame();
