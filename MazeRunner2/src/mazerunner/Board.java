@@ -9,6 +9,7 @@ import Model.game.Giftfactory;
 import Model.game.Player;
 import Model.game.SmallBomb;
 import Model.game.monster;
+import View.game.MainMenu;
 import View.game.PauseMenu;
 import static View.game.SettingsGui.check1;
 import java.awt.Color;
@@ -227,11 +228,33 @@ public class Board extends JPanel implements ActionListener {
             backgroundmenu.setSize(700, 700);
             startMenu.add(backgroundmenu);
             startMenu.setVisible(true);
+            
+            int input = JOptionPane.showOptionDialog(null, "You Won ! Press Ok to return back to Main Menu", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+    
+
+if(input == JOptionPane.OK_OPTION)
+{
+    MainMenu.startMenu.setVisible(true);
+    startMenu.dispose();
+}
+else
+    System.exit(0);
 
         }
         if (Health <= 0 && isCheckPoint == false) {
             Health = 0;
-            // g.drawString("Game Over", 500, 500);
+                        View.game.MazeRunner.f.dispose();
+
+int input = JOptionPane.showOptionDialog(null, "You Lost ! Press Ok to return back to Main Menu", "", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+    
+
+if(input == JOptionPane.OK_OPTION)
+{
+    MainMenu.startMenu.setVisible(true);
+}
+else
+    System.exit(0);
+          //   g.drawString("Game Over", 500, 500);
 //           View.game.MazeRunner.f.dispose();
 //         JFrame startMenu = new JFrame();
 //        startMenu.setTitle("YOU LOST");
