@@ -108,7 +108,7 @@ public class PauseMenu {
                         } else {
                             writer.write(0 + System.lineSeparator());
                         }
-
+writer.write(Board.time+System.lineSeparator());
                         writer.close();
                     } catch (IOException ex) {
                         ex.printStackTrace();

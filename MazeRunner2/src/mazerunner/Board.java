@@ -38,7 +38,7 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     private Timer tm = new Timer(1000, this);
     JTextField jf = new JTextField(10);
-    int time = 0;
+ public static int time = 0;
     public static Map m;
     public static Player p;
     public static monster monster;
@@ -915,7 +915,7 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public static void music() throws IOException {
-
+            if (View.game.MainMenu.startMenu.isVisible() || View.game.PauseMenu.startMenu.isVisible()){
         String filename = "mus.wav";
         ContinuousAudioDataStream loop = null;
         InputStream in = null;
@@ -932,5 +932,7 @@ public class Board extends JPanel implements ActionListener {
             System.out.println(ex.getMessage());
         }
     }
+            
 
+}
 }

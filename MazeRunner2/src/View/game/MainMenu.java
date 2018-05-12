@@ -96,8 +96,7 @@ public class MainMenu {
                         Board.p.setTileY(place2);
                  }
 else {
-                        int nouse1 = srscanner.nextInt();
-                        int nouse2 = srscanner.nextInt();
+                        
 
                     }
                     int findarm=srscanner.nextInt();
@@ -107,7 +106,7 @@ else {
                     else{
                         Board.haveArmour=false;
                     }
-
+Board.time=srscanner.nextInt();
                     srscanner.close();
 
                 }
