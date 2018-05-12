@@ -1,28 +1,17 @@
 package mazerunner;
 
-import Model.game.Bigbombs;
-import Model.game.BombDecorator;
 import Model.game.Bombfactory;
 import Model.game.Bombs;
 import Model.game.Bullets;
 import Model.game.Checkpoint;
 import Model.game.Gift;
 import Model.game.Giftfactory;
-import Model.game.HealthGift;
 import Model.game.Player;
-import Model.game.ShieldGift;
 import Model.game.SmallBomb;
-import Model.game.bulletsgift;
-import Model.game.coin;
-import Model.game.dollar;
-import static View.game.MazeRunner.f;
+import Model.game.monster;
 import View.game.PauseMenu;
 import static View.game.SettingsGui.check1;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -34,7 +23,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.Mac;
 import javax.swing.*;
 import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
@@ -53,6 +41,7 @@ public class Board extends JPanel implements ActionListener {
     int time = 0;
     public static Map m;
     public static Player p;
+    public static monster monster;
     private SmallBomb SB;
     Bombfactory bombfactory = new Bombfactory();
     Giftfactory giftfactory = new Giftfactory();
@@ -75,11 +64,15 @@ public class Board extends JPanel implements ActionListener {
     private boolean flag = false;
     public static int xsave = 0, ysave = 0;
     public static boolean haveArmour = false;
+    int startx, exit = 5;
+    int starty;
 
     public Board() {
         add(jf);
         SB = new SmallBomb();
         p = new Player(0, 0);
+        monster = new monster();
+
         m = new Map();
         ImageIcon img = new ImageIcon("w.jpg");
         toolbar = img.getImage();
@@ -161,10 +154,31 @@ public class Board extends JPanel implements ActionListener {
                         g.drawImage(BG.getimg(), x * 32, y * 32, null);
 
                     }
+
                 }
 
             }
 
+            ////////////////////////////monster
+            if (!m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("t")&&exit<14) {
+
+                monster.movem(0, 1);
+                g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() * 32, null);
+                exit++;
+            } else {
+
+                if (!m.getMap(monster.getTileX(), monster.getTileY() - 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() - 1).equals("t")) {
+
+                    monster.movem(0, -1);
+                    g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() * 32, null);
+                }
+            }
+
+            if (monster.getTileY() == 5 ) {
+                exit = 5;
+            }
+
+///////////////////////////////
             if (left) {
                 g.drawImage(p.getPlayer1(), p.getTileX() * 32, p.getTileY() * 32, null);
             }
@@ -205,8 +219,6 @@ public class Board extends JPanel implements ActionListener {
             backgroundmenu.setSize(700, 700);
             startMenu.add(backgroundmenu);
             startMenu.setVisible(true);
-           
-
 
         }
         if (Health <= 0 && isCheckPoint == false) {
@@ -889,8 +901,9 @@ public class Board extends JPanel implements ActionListener {
     }
 
     public void logic() {
-        if(!View.game.MainMenu.startMenu.isVisible()&& !View.game.PauseMenu.startMenu.isVisible())
-        time++;
+        if (!View.game.MainMenu.startMenu.isVisible() && !View.game.PauseMenu.startMenu.isVisible()) {
+            time++;
+        }
         if (time == 3600) {
             JOptionPane.showMessageDialog(null, "Time is up");
 
