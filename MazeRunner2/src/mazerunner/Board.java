@@ -32,6 +32,7 @@ import sun.audio.ContinuousAudioDataStream;
 
 public class Board extends JPanel implements ActionListener {
 
+    private static Board newBoard;
     public int currentArticle = 0;
     public static boolean isCheckPoint;
     CareTaker caretaker = new CareTaker();
@@ -39,7 +40,7 @@ public class Board extends JPanel implements ActionListener {
     private Timer timer;
     private Timer tm = new Timer(1000, this);
     JTextField jf = new JTextField(10);
- public static int time = 0;
+    public static int time = 0;
     public static Map m;
     public static Player p;
     public static monster monster;
@@ -65,11 +66,11 @@ public class Board extends JPanel implements ActionListener {
     private boolean flag = false;
     public static int xsave = 0, ysave = 0;
     public static boolean haveArmour = false;
-    int startx, exit = 6;
+    int startx, exit = 8;
     int starty;
-    public static  int monalive=1;
+    public static int monalive = 1;
 
-    public Board() {
+    private Board() {
         add(jf);
         SB = new SmallBomb();
         p = new Player(0, 0);
@@ -85,6 +86,28 @@ public class Board extends JPanel implements ActionListener {
 
     }
 
+    public static synchronized Board getInstance() {
+        if (newBoard == null) {
+            newBoard = new Board();
+        }
+        return newBoard;
+    }
+
+//    public Board() {
+//        add(jf);
+//        SB = new SmallBomb();
+//        p = new Player(0, 0);
+//        monster = new monster();
+//
+//        m = new Map();
+//        ImageIcon img = new ImageIcon("w.jpg");
+//        toolbar = img.getImage();
+//        addKeyListener(new Al());
+//        setFocusable(true);
+//        timer = new Timer(55, this);
+//        timer.start();
+//
+//    }
     public void actionPerformed(ActionEvent e) {
         if (m.getMap(p.getTileX(), p.getTileY()).equals("f")) {
             Finishstr = "Winner";
@@ -162,31 +185,30 @@ public class Board extends JPanel implements ActionListener {
             }
 
             ////////////////////////////monster
-            
-            if(monalive==1){
-            if (!m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("t")&&exit<14) {
+            if (monalive == 1) {
+                if (!m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("t") && exit < 16) {
 
-                monster.move(0, 1);
-                g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() * 32, null);
-                exit++;
-            } else {
+                    monster.move(0, 1);
+                    g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() * 32, null);
+                    exit++;
+                } else {
 
-                if (!m.getMap(monster.getTileX(), monster.getTileY() - 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() - 1).equals("t")) {
+                    if (!m.getMap(monster.getTileX(), monster.getTileY() - 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() - 1).equals("t")) {
 
-                    monster.move(0, -1);
-                    g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() *32, null);
+                        monster.move(0, -1);
+                        g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() * 32, null);
+                    }
+                }
+
+                if (monster.getTileY() == 8) {
+                    exit = 8;
+                }
+
+                if (monster.getTileX() == p.getTileX() && monster.getTileY() == p.getTileY()) {
+                    Health = 0;
                 }
             }
 
-            if (monster.getTileY() == 6 ) {
-                exit = 6;
-            }
-            
-            if(monster.getTileX()==p.getTileX()&&monster.getTileY()==p.getTileY()){
-                Health=0;
-            }
-            }   
-         
 ///////////////////////////////
             if (left) {
                 g.drawImage(p.getPlayer1(), p.getTileX() * 32, p.getTileY() * 32, null);
@@ -228,18 +250,18 @@ public class Board extends JPanel implements ActionListener {
             backgroundmenu.setSize(700, 700);
             startMenu.add(backgroundmenu);
             startMenu.setVisible(true);
-            
-          JOptionPane.showMessageDialog(null,"You Won ! Press Ok to Exit the game");
-          System.exit(0);
+
+            JOptionPane.showMessageDialog(null, "You Won ! Press Ok to Exit the game");
+            System.exit(0);
 
         }
         if (Health <= 0 && isCheckPoint == false) {
             Health = 0;
-                        View.game.MazeRunner.f.dispose();
+            View.game.MazeRunner.f.dispose();
 
-JOptionPane.showMessageDialog(null, "You Lost ! Press ok to Exit the game");
-System.exit(0);
-          //   g.drawString("Game Over", 500, 500);
+            JOptionPane.showMessageDialog(null, "You Lost ! Press ok to Exit the game");
+            System.exit(0);
+            //   g.drawString("Game Over", 500, 500);
 //           View.game.MazeRunner.f.dispose();
 //         JFrame startMenu = new JFrame();
 //        startMenu.setTitle("YOU LOST");
@@ -309,13 +331,13 @@ System.exit(0);
                         }
                         i++;
                     }
-                    
-                    if(b.getX()/32==monster.getTileX()&&b.getY()/32==monster.getTileY()){
+
+                    if (b.getX() / 32 == monster.getTileX() && b.getY() / 32 == monster.getTileY()) {
                         m.set(b.getX() / 32, b.getY() / 32);
-                        monalive=0; 
+                        monalive = 0;
                         bullets.remove(b);
                     }
-                   
+
                 } catch (Exception e) {
 
                 }
@@ -938,24 +960,23 @@ System.exit(0);
     }
 
     public static void music() throws IOException {
-            if (View.game.MainMenu.startMenu.isVisible() || View.game.PauseMenu.startMenu.isVisible()){
-        String filename = "mus.wav";
-        ContinuousAudioDataStream loop = null;
-        InputStream in = null;
-        try {
-            in = new FileInputStream(filename);
-        } catch (FileNotFoundException ex) {
-            System.out.println("File not found");
+        if (View.game.MainMenu.startMenu.isVisible() || View.game.PauseMenu.startMenu.isVisible()) {
+            String filename = "mus.wav";
+            ContinuousAudioDataStream loop = null;
+            InputStream in = null;
+            try {
+                in = new FileInputStream(filename);
+            } catch (FileNotFoundException ex) {
+                System.out.println("File not found");
+            }
+            try {
+                AudioStream s = new AudioStream(in);
+                AudioData MD;
+                AudioPlayer.player.start(s);
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         }
-        try {
-            AudioStream s = new AudioStream(in);
-            AudioData MD;
-            AudioPlayer.player.start(s);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-            
 
-}
+    }
 }

@@ -24,10 +24,10 @@ public class Player extends Observable {
     private int score, health;
 
     public Player(int score, int health) {
-        player1 = Toolkit.getDefaultToolkit().createImage("Playerside1.png");
-        player2 = Toolkit.getDefaultToolkit().createImage("Playerside2.png");
-        player3 = Toolkit.getDefaultToolkit().createImage("Playerup.png");
-        player4 = Toolkit.getDefaultToolkit().createImage("Playerdown.png");
+        player1 = Toolkit.getDefaultToolkit().createImage("pl.png");
+        player2 = Toolkit.getDefaultToolkit().createImage("pr.png");
+        player3 = Toolkit.getDefaultToolkit().createImage("pu.png");
+        player4 = Toolkit.getDefaultToolkit().createImage("pd.png");
         tileX = 1;
         tileY = 1;
 

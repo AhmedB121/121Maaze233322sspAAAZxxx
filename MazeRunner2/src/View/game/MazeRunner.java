@@ -26,9 +26,11 @@ public class MazeRunner {
 
     public MazeRunner() throws InterruptedException, IOException {
 
+       
         new MainMenu();
         f.setTitle("Maze Game");
-        f.add(new Board());
+        //f.add(new Board());
+        f.add(Board.getInstance());
         f.setSize(1000, 1000);
         f.setLocationRelativeTo(null);
         f.setUndecorated(true);
