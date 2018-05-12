@@ -95,6 +95,8 @@ public class monster {
           System.out.println(b.getX() + "  " + this.tileX);
         return b;
     }
+    
+   
 
     
 }

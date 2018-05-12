@@ -64,8 +64,9 @@ public class Board extends JPanel implements ActionListener {
     private boolean flag = false;
     public static int xsave = 0, ysave = 0;
     public static boolean haveArmour = false;
-    int startx, exit = 5;
+    int startx, exit = 6;
     int starty;
+    public static  int monalive=1;
 
     public Board() {
         add(jf);
@@ -78,7 +79,7 @@ public class Board extends JPanel implements ActionListener {
         toolbar = img.getImage();
         addKeyListener(new Al());
         setFocusable(true);
-        timer = new Timer(25, this);
+        timer = new Timer(55, this);
         timer.start();
 
     }
@@ -160,24 +161,31 @@ public class Board extends JPanel implements ActionListener {
             }
 
             ////////////////////////////monster
+            
+            if(monalive==1){
             if (!m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("t")&&exit<14) {
 
-                monster.movem(0, 1);
+                monster.move(0, 1);
                 g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() * 32, null);
                 exit++;
             } else {
 
                 if (!m.getMap(monster.getTileX(), monster.getTileY() - 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() - 1).equals("t")) {
 
-                    monster.movem(0, -1);
-                    g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() * 32, null);
+                    monster.move(0, -1);
+                    g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() *32, null);
                 }
             }
 
-            if (monster.getTileY() == 5 ) {
-                exit = 5;
+            if (monster.getTileY() == 6 ) {
+                exit = 6;
             }
-
+            
+            if(monster.getTileX()==p.getTileX()&&monster.getTileY()==p.getTileY()){
+                Health=0;
+            }
+            }   
+         
 ///////////////////////////////
             if (left) {
                 g.drawImage(p.getPlayer1(), p.getTileX() * 32, p.getTileY() * 32, null);
@@ -293,6 +301,13 @@ public class Board extends JPanel implements ActionListener {
                         }
                         i++;
                     }
+                    
+                    if(b.getX()/32==monster.getTileX()&&b.getY()/32==monster.getTileY()){
+                        m.set(b.getX() / 32, b.getY() / 32);
+                        monalive=0; 
+                        bullets.remove(b);
+                    }
+                   
                 } catch (Exception e) {
 
                 }

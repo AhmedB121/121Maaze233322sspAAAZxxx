@@ -74,6 +74,7 @@ public class PauseMenu {
             public void actionPerformed(ActionEvent e) {
                 int playerx = 0;
                 int playery = 0;
+                int mon=Board.monalive;
                 int savehealth = Board.Health;
                 int savescore = Board.score;
                 int savebullets = Board.bullet;
@@ -108,6 +109,13 @@ public class PauseMenu {
                         } else {
                             writer.write(0 + System.lineSeparator());
                         }
+                        if(mon==1){
+                             writer.write(1 + System.lineSeparator()); 
+                        }else{
+                              writer.write(0 + System.lineSeparator()); 
+                        
+                        }
+                        
 writer.write(Board.time+System.lineSeparator());
                         writer.close();
                     } catch (IOException ex) {

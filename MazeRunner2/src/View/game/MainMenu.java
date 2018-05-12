@@ -22,9 +22,11 @@ import mazerunner.Map;
  * @author dell-pc
  */
 public class MainMenu {
- public static JFrame startMenu = new JFrame();
+
+    public static JFrame startMenu = new JFrame();
+
     public MainMenu() {
-        
+
         startMenu.setTitle("Main Menu");
         startMenu.setUndecorated(true);
         JButton btn1 = new JButton();
@@ -88,25 +90,29 @@ public class MainMenu {
                     Board.Health = srscanner.nextInt();
                     Board.score = srscanner.nextInt();
                     Board.bullet = srscanner.nextInt();
-                    int place1=srscanner.nextInt();
-                    int place2=srscanner.nextInt();
-                            
-                 if(place1!=0&&place2!=0){
+                    int place1 = srscanner.nextInt();
+                    int place2 = srscanner.nextInt();
+
+                    if (place1 != 0 && place2 != 0) {
                         Board.p.setTileX(place1);
                         Board.p.setTileY(place2);
-                 }
-else {
-                        
+                    } else {
 
                     }
-                    int findarm=srscanner.nextInt();
-                    if(findarm==1){
-                        Board.haveArmour=true;
+                    int findarm = srscanner.nextInt();
+                    if (findarm == 1) {
+                        Board.haveArmour = true;
+                    } else {
+                        Board.haveArmour = false;
                     }
-                    else{
-                        Board.haveArmour=false;
+                    Board.time = srscanner.nextInt();
+                    int seemonalive=srscanner.nextInt();
+                    if (seemonalive==1) {
+                        Board.monalive=1;
+                        
+                    }else{
+                        Board.monalive=0;
                     }
-Board.time=srscanner.nextInt();
                     srscanner.close();
 
                 }

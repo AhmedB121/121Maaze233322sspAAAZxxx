@@ -32,7 +32,7 @@ public class SmallBomb extends Bombs {
 
    public SmallBomb() {
         super();
-        ImageIcon img = new ImageIcon("Redbomb.gif");
+        ImageIcon img = new ImageIcon("bbb.jpg");
         super.Bombimg = img.getImage();
         setDamage(10);
     
