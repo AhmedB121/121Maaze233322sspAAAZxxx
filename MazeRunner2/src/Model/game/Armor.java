@@ -12,4 +12,6 @@ package Model.game;
 public interface Armor {
     public void putarmor();
     
+    ////
+    
 }
