@@ -75,6 +75,7 @@ public class PauseMenu {
                 int playerx = 0;
                 int playery = 0;
                 int mon=Board.monalive;
+                int mon2=Board.monalive2;
                 int savehealth = Board.Health;
                 int savescore = Board.score;
                 int savebullets = Board.bullet;
@@ -110,6 +111,13 @@ public class PauseMenu {
                             writer.write(0 + System.lineSeparator());
                         }
                         if(mon==1){
+                             writer.write(1 + System.lineSeparator()); 
+                        }else{
+                              writer.write(0 + System.lineSeparator()); 
+                        
+                        }
+                        
+                         if(mon2==1){
                              writer.write(1 + System.lineSeparator()); 
                         }else{
                               writer.write(0 + System.lineSeparator()); 

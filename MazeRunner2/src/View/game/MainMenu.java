@@ -113,6 +113,14 @@ public class MainMenu {
                     }else{
                         Board.monalive=0;
                     }
+                     int seemonalive2=srscanner.nextInt();
+                     if (seemonalive2==1) {
+                        Board.monalive2=1;
+                        
+                    }else{
+                        Board.monalive2=0;
+                    }
+                     
                        Board.time = srscanner.nextInt();
                     srscanner.close();
 

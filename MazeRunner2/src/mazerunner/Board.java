@@ -48,6 +48,7 @@ public class Board extends JPanel implements ActionListener {
     public static Map m;
     public static Player p;
     public static monster monster;
+    public static monster monster2;
     private SmallBomb SB;
     Bombfactory bombfactory = new Bombfactory();
     Giftfactory giftfactory = new Giftfactory();
@@ -70,9 +71,10 @@ public class Board extends JPanel implements ActionListener {
     private boolean flag = false;
     public static int xsave = 0, ysave = 0;
     public static boolean haveArmour = false;
-    int startx, exit = 8;
+    int startx, exit = 6,exit2=7;
     int starty;
     public static int monalive = 1;
+    public static int monalive2 = 1;
     private ArmorState state = new ArmorState();
 
     private Board() {
@@ -81,7 +83,9 @@ public class Board extends JPanel implements ActionListener {
         p = new Player(0, 0);
         Armor haveArmor = new PlayerArmor(p);
         monster = new monster();
-        m = new Map();
+        monster2 = new monster();
+        monster2.setTileX(28);
+             m = new Map();
         ImageIcon img = new ImageIcon("w.jpg");
         toolbar = img.getImage();
         addKeyListener(new Al());
@@ -97,7 +101,6 @@ public class Board extends JPanel implements ActionListener {
         }
         return newBoard;
     }
-
 
     public void actionPerformed(ActionEvent e) {
         if (m.getMap(p.getTileX(), p.getTileY()).equals("f")) {
@@ -177,7 +180,7 @@ public class Board extends JPanel implements ActionListener {
 
 ////////////////////////////monster
             if (monalive == 1) {
-                if (!m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("t") && exit < 16) {
+                if (!m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("t") && exit < 15) {
 
                     monster.move(0, 1);
                     g.drawImage(monster.getPlayer1(), monster.getTileX() * 32, monster.getTileY() * 32, null);
@@ -191,8 +194,8 @@ public class Board extends JPanel implements ActionListener {
                     }
                 }
 
-                if (monster.getTileY() == 8) {
-                    exit = 8;
+                if (monster.getTileY() == 6) {
+                    exit = 6;
                 }
 
                 if (monster.getTileX() == p.getTileX() && monster.getTileY() == p.getTileY()) {
@@ -201,6 +204,32 @@ public class Board extends JPanel implements ActionListener {
             }
 
 ///////////////////////////////
+//////////////////////////////
+ if (monalive2 == 1) {
+                if (!m.getMap(monster2.getTileX(), monster2.getTileY() + 1).equals("w") && !m.getMap(monster2.getTileX(), monster2.getTileY() + 1).equals("t") && exit2 < 13) {
+
+                    monster2.move(0, 1);
+                    g.drawImage(monster2.getPlayer1(), monster2.getTileX() * 32, monster2.getTileY() * 32, null);
+                    exit2++;
+                } else {
+
+                    if (!m.getMap(monster2.getTileX(), monster2.getTileY() - 1).equals("w") && !m.getMap(monster2.getTileX(), monster2.getTileY() - 1).equals("t")) {
+
+                        monster2.move(0, -1);
+                        g.drawImage(monster2.getPlayer1(), monster2.getTileX() * 32, monster2.getTileY() * 32, null);
+                    }
+                }
+
+                if (monster2.getTileY() == 7) {
+                    exit2 = 7;
+                }
+
+                if (monster2.getTileX() == p.getTileX() && monster2.getTileY() == p.getTileY()) {
+                    Health = 0;
+                }
+            }
+ ///////////////////////////////////////////
+
             if (left) {
                 g.drawImage(p.getPlayer1(), p.getTileX() * 32, p.getTileY() * 32, null);
             }
@@ -252,7 +281,7 @@ public class Board extends JPanel implements ActionListener {
 
             JOptionPane.showMessageDialog(null, "You Lost ! Press ok to Exit the game");
             System.exit(0);
-       
+
         }
         g.setColor(Color.BLACK);
         g.drawRect(40, 0, 100, 30);
@@ -265,12 +294,12 @@ public class Board extends JPanel implements ActionListener {
         }
 
         if (haveArmour) {
-            
+
 //            SG.setIson(true);
-              state.setArmorToTrue(SG);
+            state.setArmorToTrue(SG);
         } else {
 //            SG.setIson(false);
-              state.setArmortoFalse(SG);  
+            state.setArmortoFalse(SG);
         }
         if (SG.ison()) {
             g.drawImage(m.getArmour(), 165, 0, null);
@@ -317,6 +346,13 @@ public class Board extends JPanel implements ActionListener {
                         monalive = 0;
                         bullets.remove(b);
                     }
+                    
+                     if (b.getX() / 32 == monster2.getTileX() && b.getY() / 32 == monster2.getTileY()) {
+                        m.set(b.getX() / 32, b.getY() / 32);
+                        monalive2 = 0;
+                        bullets.remove(b);
+                    }
+
 
                 } catch (Exception e) {
 
@@ -337,8 +373,8 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
 //                                SG.setIson(false);
-                                    state.setArmortoFalse(SG);
-                                  haveArmour = false;
+                                state.setArmortoFalse(SG);
+                                haveArmour = false;
 
                             } else {
                                 Health = Health - 10;
@@ -347,11 +383,11 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
                             m.set(p.getTileX(), p.getTileY());
-                              HG.update();
+                            HG.update();
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
 //                            SG.setIson(true);
-                                state.setArmorToTrue(SG);
+                            state.setArmorToTrue(SG);
                             p.putarmor();
                             haveArmour = true;
                             m.set(p.getTileX(), p.getTileY());
@@ -410,7 +446,7 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
 //                                SG.setIson(false);
-                                    state.setArmortoFalse(SG);
+                                state.setArmortoFalse(SG);
                                 haveArmour = false;
 
                             } else {
@@ -426,7 +462,7 @@ public class Board extends JPanel implements ActionListener {
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
 //                            SG.setIson(true);
                             state.setArmorToTrue(SG);
-                             p.putarmor();
+                            p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -444,7 +480,7 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 30;
 //                                SG.setIson(false);
-                            state.setArmortoFalse(SG);
+                                state.setArmortoFalse(SG);
                             } else {
                                 Health = Health - 50;
                             }
@@ -500,8 +536,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
 //                            SG.setIson(true);
-                                state.setArmorToTrue(SG);
-                             p.putarmor();
+                            state.setArmorToTrue(SG);
+                            p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -577,8 +613,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
 //                            SG.setIson(true);
-                                state.setArmorToTrue(SG);
-                             p.putarmor();
+                            state.setArmorToTrue(SG);
+                            p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -637,7 +673,7 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 5;
 //                                SG.setIson(false);
-                                    state.setArmortoFalse(SG);
+                                state.setArmortoFalse(SG);
                                 haveArmour = false;
 
                             } else {
@@ -652,8 +688,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
 //                            SG.setIson(true);
-                                state.setArmorToTrue(SG);
-                             p.putarmor();
+                            state.setArmorToTrue(SG);
+                            p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -672,7 +708,7 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 30;
 //                                SG.setIson(false);
-                                    state.setArmortoFalse(SG);
+                                state.setArmortoFalse(SG);
                             } else {
                                 Health = Health - 50;
                             }
@@ -728,8 +764,8 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
 //                            SG.setIson(true);
-                                state.setArmorToTrue(SG);
-                             p.putarmor();
+                            state.setArmorToTrue(SG);
+                            p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -747,7 +783,7 @@ public class Board extends JPanel implements ActionListener {
                             if (SG.ison()) {
                                 Health = Health - 30;
 //                                SG.setIson(false);
-state.setArmortoFalse(SG);
+                                state.setArmortoFalse(SG);
                             } else {
                                 Health = Health - 50;
                             }
@@ -787,8 +823,8 @@ state.setArmortoFalse(SG);
                             if (SG.ison()) {
                                 Health = Health - 5;
 //                                SG.setIson(false);
-                                    state.setArmortoFalse(SG);
-                                   haveArmour = false;
+                                state.setArmortoFalse(SG);
+                                haveArmour = false;
 
                             } else {
                                 Health = Health - 10;
@@ -804,7 +840,7 @@ state.setArmortoFalse(SG);
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
 //                            SG.setIson(true);
                             state.setArmorToTrue(SG);
-                             p.putarmor();
+                            p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -822,7 +858,7 @@ state.setArmortoFalse(SG);
                             if (SG.ison()) {
                                 Health = Health - 30;
 //                                SG.setIson(false);
-                                   state.setArmortoFalse(SG);
+                                state.setArmortoFalse(SG);
                             } else {
                                 Health = Health - 50;
                             }
@@ -864,7 +900,7 @@ state.setArmortoFalse(SG);
                             if (SG.ison()) {
                                 Health = Health - 5;
 //                                SG.setIson(false);
-                                  state.setArmortoFalse(SG);
+                                state.setArmortoFalse(SG);
                                 haveArmour = false;
 
                             } else {
@@ -881,7 +917,7 @@ state.setArmortoFalse(SG);
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
 //                            SG.setIson(true);
                             state.setArmorToTrue(SG);
-                             p.putarmor();
+                            p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
