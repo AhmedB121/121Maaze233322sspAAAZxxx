@@ -105,7 +105,7 @@ public class MainMenu {
                     } else {
                         Board.haveArmour = false;
                     }
-                    Board.time = srscanner.nextInt();
+                 
                     int seemonalive=srscanner.nextInt();
                     if (seemonalive==1) {
                         Board.monalive=1;
@@ -113,9 +113,11 @@ public class MainMenu {
                     }else{
                         Board.monalive=0;
                     }
+                       Board.time = srscanner.nextInt();
                     srscanner.close();
 
                 }
+                
                 f.setVisible(true);
                 startMenu.dispose();
             }
@@ -166,7 +168,7 @@ public class MainMenu {
         btn4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "CopyRight Ahmed Hamid,Amr Akmal,Ahmed Bahey,Zeyad!");
+                JOptionPane.showMessageDialog(null, "CopyRight Ahmed Hamdi,Amr Akmal,Ahmed Bahey,Zeyad!");
 
             }
         });
