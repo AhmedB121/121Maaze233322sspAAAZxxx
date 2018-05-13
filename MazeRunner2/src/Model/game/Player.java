@@ -17,7 +17,7 @@ import javax.swing.*;
  *
  * @author dell-pc
  */
-public class Player extends Observable {
+public class Player  extends Observable implements Armor{
 
     private int tileX, tileY;
     private Image player1, player2, player3, player4;
@@ -99,5 +99,14 @@ public class Player extends Observable {
           System.out.println(b.getX() + "  " + this.tileX);
         return b;
     }
+
+    @Override
+    public void putarmor() {
+       
+    }
+    
+    
+
+
 
 }

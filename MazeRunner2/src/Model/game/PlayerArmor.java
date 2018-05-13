@@ -7,26 +7,31 @@ package Model.game;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import mazerunner.Board;
 
 /**
  *
  * @author Ahmed Bahey
  */
-public class ShieldGift extends Gift{
-protected  int protectHeath=5;
+public class PlayerArmor extends PlayerDecorator{
+
+    protected int protectHeath = 5;
     protected Image sheild;
-   
-    protected boolean ison=false;
-    public ShieldGift() {
-         super("Shield Gift");
-         ImageIcon img=new ImageIcon("Shield.png");
-         this.sheild=img.getImage();
+    protected boolean ison = false;
+    public PlayerArmor(Armor playerDecorator) {
+        super(playerDecorator);
+        
+         ImageIcon img = new ImageIcon("Shield.png");
+        this.sheild = img.getImage();
+    }
+    
+     
+    @Override
+    public void putarmor() {
+      this.ison=true; 
         
     }
     
-   
-     public Image getimg() {
+    public Image getimg() {
         return sheild;
     }
 
@@ -38,6 +43,9 @@ protected  int protectHeath=5;
     public void setIson(boolean ison) {
         this.ison = ison;
     }
+    
+   
+    
     
     
 }

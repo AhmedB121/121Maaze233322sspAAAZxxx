@@ -1,5 +1,6 @@
 package mazerunner;
 
+import Model.game.Armor;
 import Model.game.Bombfactory;
 import Model.game.Bombs;
 import Model.game.Bullets;
@@ -7,6 +8,8 @@ import Model.game.Checkpoint;
 import Model.game.Gift;
 import Model.game.Giftfactory;
 import Model.game.Player;
+import Model.game.PlayerArmor;
+import Model.game.PlayerDecorator;
 import Model.game.SmallBomb;
 import Model.game.monster;
 import View.game.MainMenu;
@@ -74,8 +77,8 @@ public class Board extends JPanel implements ActionListener {
         add(jf);
         SB = new SmallBomb();
         p = new Player(0, 0);
+        Armor haveArmor = new PlayerArmor(p);
         monster = new monster();
-
         m = new Map();
         ImageIcon img = new ImageIcon("w.jpg");
         toolbar = img.getImage();
@@ -93,21 +96,7 @@ public class Board extends JPanel implements ActionListener {
         return newBoard;
     }
 
-//    public Board() {
-//        add(jf);
-//        SB = new SmallBomb();
-//        p = new Player(0, 0);
-//        monster = new monster();
-//
-//        m = new Map();
-//        ImageIcon img = new ImageIcon("w.jpg");
-//        toolbar = img.getImage();
-//        addKeyListener(new Al());
-//        setFocusable(true);
-//        timer = new Timer(55, this);
-//        timer.start();
-//
-//    }
+
     public void actionPerformed(ActionEvent e) {
         if (m.getMap(p.getTileX(), p.getTileY()).equals("f")) {
             Finishstr = "Winner";
@@ -184,7 +173,7 @@ public class Board extends JPanel implements ActionListener {
 
             }
 
-            ////////////////////////////monster
+////////////////////////////monster
             if (monalive == 1) {
                 if (!m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("w") && !m.getMap(monster.getTileX(), monster.getTileY() + 1).equals("t") && exit < 16) {
 
@@ -261,21 +250,7 @@ public class Board extends JPanel implements ActionListener {
 
             JOptionPane.showMessageDialog(null, "You Lost ! Press ok to Exit the game");
             System.exit(0);
-            //   g.drawString("Game Over", 500, 500);
-//           View.game.MazeRunner.f.dispose();
-//         JFrame startMenu = new JFrame();
-//        startMenu.setTitle("YOU LOST");
-//        startMenu.setUndecorated(true);
-//        startMenu.setSize(470, 470);
-//        startMenu.setLayout(null);
-//        startMenu.setLocationRelativeTo(null);
-//        ImageIcon backimg = new ImageIcon("won.jpg");
-//        JLabel backgroundmenu = new JLabel(backimg);
-//        backgroundmenu.setSize(500, 500);
-//        startMenu.add(backgroundmenu);
-//        startMenu.setVisible(true);
-//           
-
+       
         }
         g.setColor(Color.BLACK);
         g.drawRect(40, 0, 100, 30);
@@ -366,11 +341,11 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("h")) {
                             m.set(p.getTileX(), p.getTileY());
-                            /// HG.increaseHealth();
-                            HG.update();
+                              HG.update();
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                            p.putarmor();
                             haveArmour = true;
                             m.set(p.getTileX(), p.getTileY());
                         }
@@ -441,6 +416,7 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                             p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -512,6 +488,7 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                             p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -585,6 +562,7 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                             p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -656,6 +634,7 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                             p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -728,6 +707,7 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                             p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -799,6 +779,7 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                             p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
@@ -872,6 +853,7 @@ public class Board extends JPanel implements ActionListener {
                         }
                         if (m.getMap(p.getTileX(), p.getTileY()).equals("A")) {
                             SG.setIson(true);
+                             p.putarmor();
                             haveArmour = true;
 
                             m.set(p.getTileX(), p.getTileY());
